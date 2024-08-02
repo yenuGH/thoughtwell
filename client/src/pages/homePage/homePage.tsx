@@ -1,25 +1,50 @@
 import {
     Center,
     Container,
-    Flex,
-    Group,
     Stack,
-    ActionIcon,
-    Textarea,
-    Box,
-    Title,
+    Group,
+    Button,
+    Textarea
 } from "@mantine/core";
-
-import {
-    IconUserCircle
-} from "@tabler/icons-react"
-
-import Header from "../../widgets/header/header";
 
 export function HomePage() {
     return (
         <>
-            <Title>Main</Title>
+            <Stack>
+                <Container>
+                    <Center>
+                        <h1>Welcome to the positivity app!</h1>
+                    </Center>
+                </Container>
+
+                <Textarea 
+                    label="Spread some positivity"
+                    description="What's on your mind?"
+                    placeholder="Type here..."
+                    size="xl"
+                    autosize
+                    minRows={5}
+                />
+
+                <Group
+                    justify="space-between"
+                    align="center"
+                >
+                    <Button
+                        color="teal"
+                        variant="light"
+                    >
+                        Deposit
+                    </Button>
+
+                    <Button
+                        color="red"
+                        variant="light"
+                    >
+                        Withdraw
+                    </Button>
+                </Group>
+            </Stack>
         </>
     );
 }
