@@ -13,7 +13,7 @@ export function HomePage() {
             <Stack>
                 <Container>
                     <Center>
-                        <h1>Welcome to the positivity app!</h1>
+                        <h1>Welcome to Thoughtwell!</h1>
                     </Center>
                 </Container>
 
