@@ -7,9 +7,11 @@ import {
 } from "@mantine/core";
 
 import {
-    IconUserCircle,
     IconBuildingBank
 } from "@tabler/icons-react"
+
+import LightDarkToggle from "../themeToggle/toggleButton";
+import UserSettings from "../userSettings/userSettings";
 
 export default function Header() {
     return (
@@ -34,13 +36,11 @@ export default function Header() {
                     </Title>
                 </Group>
 
-                <ActionIcon
-                    variant="outline"
-                    size="xl"
-                    radius="xl"
-                >
-                    <IconUserCircle />
-                </ActionIcon>
+                <Group>
+                    <LightDarkToggle />
+                    <UserSettings />
+                </Group>
+
             </Group>
 
             <Divider my="xs" />
