@@ -5,13 +5,23 @@ import {
   Group,
   Button,
   Textarea,
-  Text
+  Text,
+  Image,
 } from "@mantine/core";
 
+import DepositButton from "../../widgets/deposit/depositButton.tsx";
+import WithdrawButton from "../../widgets/withdraw/withdrawButton.tsx";
+
 export function HomePage() {
+  // useEffect(() => {
+  //   document.title = "Thoughtwell";
+  // }, []);
+
+
   return (
     <>
       <Stack>
+
         <Container>
           <Center>
             <h1>Welcome to Thoughtwell!</h1>
@@ -24,50 +34,22 @@ export function HomePage() {
         </Container>
 
         <Group justify="center">
-          <Button 
-            size="xl"
-            color="teal"
-            variant="light"
-          >
-            Deposit
-          </Button>
 
-          <Button
-            size="xl"
-            color="red"
-            variant="light"
-          >
-            Withdraw
-          </Button>
+          <DepositButton>
+          </DepositButton>
+
+          <WithdrawButton>
+          </WithdrawButton>
         </Group>
 
-        {/* <Textarea
-          label="Spread some positivity"
-          description="What's on your mind?"
-          placeholder="Type here..."
-          size="xl"
-          autosize
-          minRows={5}
-        />
-
-        <Group
-          justify="space-between"
-          align="center"
-        >
-          <Button
-            color="teal"
-            variant="light"
-          >
-            Deposit
-          </Button>
-
-          <Button
-            color="red"
-            variant="light"
-          >
-            Withdraw
-          </Button>
-        </Group> */}
+        <Center style={{ height: '80vh' }}>
+          <Image
+            src="../src/assets/wishingwell.png"
+            height={300}
+          // margin-left="50px"
+          // width={250}
+          />
+        </Center>
 
       </Stack>
     </>
