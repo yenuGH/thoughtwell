@@ -3,24 +3,35 @@ import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 
 export default function Withdraw() {
-    const [opened, { open, close }] = useDisclosure(false);
-  const handleClicked = () => {
-    alert("Withdraw clicked!");
-  };
+  const [opened, { open, close }] = useDisclosure(false);
+  const [thought, setThought] = useState(localStorage.getItem("thought") || "");
+
+  function withdrawThought() {
+    // grab a random index from 0 to the length of the local storage
+    const localStorageLength = localStorage.length;
+    const randomIndex = Math.floor(Math.random() * localStorageLength);
+
+
+    let key = localStorage.key(randomIndex);
+    let value = localStorage.getItem(key!);
+    console.log('key: ' + key + ' value: ' + value);
+    setThought(value!);
+
+
+    // var listLength = localStorage.length;
+    // localStorage.removeItem("thought");
+    // setThought("");
+  }
 
   return (
     <>
-        <Modal opened={opened} onClose={close} title="Deposit a thought">
+      <Modal opened={opened} onClose={close} title="Withdraw thought">
         <Text>
-            {localStorage.getItem("thought")}
+          {thought ? thought : "No thought to withdraw."}
         </Text>
 
         <Button
           onClick={() => {
-            // Deposit thought
-            console.log(localStorage.getItem("thought"));
-
-            // deposit the thought into local storage here
             close();
           }}
         >
@@ -28,14 +39,17 @@ export default function Withdraw() {
         </Button>
       </Modal>
 
-        <Button
+      <Button
         size="xl"
         color="red"
         variant="light"
-        onClick={open}
-        >
+        onClick={() => {
+          withdrawThought();
+          open();
+        }}
+      >
         Withdraw
-        </Button>
+      </Button>
     </>
   );
 }

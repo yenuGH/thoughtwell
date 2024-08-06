@@ -1,6 +1,7 @@
 import { Button, Modal, Textarea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
+import {v4 as uuid} from "uuid";
 
 export default function Deposit() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -9,7 +10,7 @@ export default function Deposit() {
 
   function depositThought() {
     // soemthing to do with local storage
-    localStorage.setItem("thought", thought); 
+    localStorage.setItem(uuid(), thought); 
   }
 
   return (
