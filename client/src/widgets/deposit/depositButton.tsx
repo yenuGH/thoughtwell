@@ -1,15 +1,21 @@
 import { Button, Modal, Textarea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
 import { useState } from "react";
+
+import { firebaseController } from "../../controllers/firebaseController";
 
 export default function Deposit() {
   const [opened, { open, close }] = useDisclosure(false);
-
   const [thought, setThought] = useState("");
 
-  function depositThought() {
+  async function depositThought() {
     // soemthing to do with local storage
-    localStorage.setItem("thought", thought); 
+    // localStorage.setItem(uuid(), thought); 
+
+    // deposit the thought into firebase here
+    await firebaseController.depositThought(thought);
+    console.log("Deposited thought: ", thought);
   }
 
   return (

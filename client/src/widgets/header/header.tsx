@@ -13,7 +13,7 @@ import {
 import LightDarkToggle from "../themeToggle/toggleButton";
 import UserSettings from "../userSettings/userSettings";
 
-export default function Header() {
+export function Header(): JSX.Element {
     return (
         <Stack>
             <Group

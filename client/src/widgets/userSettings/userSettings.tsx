@@ -12,7 +12,7 @@ import {
 
 import LightDarkToggle from "../themeToggle/toggleButton";
 
-export default function UserSettings() {
+export default function UserSettings(): JSX.Element {
     return (
         <>
             <Menu shadow="md" width={200}>
