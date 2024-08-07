@@ -1,28 +1,24 @@
-import '@mantine/core/styles.css'
-import {
-    MantineProvider,
-    Stack
-} from '@mantine/core';
+import "./App.css";
+import "@mantine/core/styles.css";
+import { MantineProvider, Stack } from "@mantine/core";
 
-import { TemplatePage } from './pages/templatePage/templatePage';
-import { HomePage } from './pages/homePage/homePage';
+import { HomePage } from "./pages/homePage/homePage";
+import { Header } from "./widgets/header/header";
 
-import './App.css'
-import Header from './widgets/header/header';
+import { firebaseController } from "./controllers/firebaseController";
 
 export default function App() {
-    return (
-        <MantineProvider defaultColorScheme='dark'>
-            <>
-                <Stack
-                    gap={0}
-                    p="md"
-                >
-                    <Header />
-                    <HomePage />
-                </Stack>
-            </>
-        </MantineProvider>
-    );
-}
+  // initialize firebase controller on app start
+  firebaseController.initialize();
 
+  return (
+    <MantineProvider defaultColorScheme="dark">
+      <>
+        <Stack gap={0} p="md">
+          <Header />
+          <HomePage />
+        </Stack>
+      </>
+    </MantineProvider>
+  );
+}

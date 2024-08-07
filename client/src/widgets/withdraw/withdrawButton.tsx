@@ -1,21 +1,26 @@
 import { Button, Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+
 import { useState } from "react";
+
+import { Thought } from "../../interfaces/thoughtInterface";
+
+import { firebaseController } from "../../controllers/firebaseController";
 
 export default function Withdraw() {
   const [opened, { open, close }] = useDisclosure(false);
   const [thought, setThought] = useState(localStorage.getItem("thought") || "");
 
-  function withdrawThought() {
-    // grab a random index from 0 to the length of the local storage
-    const localStorageLength = localStorage.length;
-    const randomIndex = Math.floor(Math.random() * localStorageLength);
-
-
-    let key = localStorage.key(randomIndex);
-    let value = localStorage.getItem(key!);
-    console.log('key: ' + key + ' value: ' + value);
-    setThought(value!);
+  async function withdrawThought() {
+    try {
+        console.log("Withdrawing random thought...");
+        var thought: Thought = await firebaseController.withdrawThought();
+        console.log("Withdrew thought: ", thought);
+        setThought(thought.thought);
+    }
+    catch (error) {
+        console.error("Error withdrawing thought: ", error);
+    }
   }
 
   return (
