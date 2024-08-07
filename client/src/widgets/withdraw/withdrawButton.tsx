@@ -16,11 +16,6 @@ export default function Withdraw() {
     let value = localStorage.getItem(key!);
     console.log('key: ' + key + ' value: ' + value);
     setThought(value!);
-
-
-    // var listLength = localStorage.length;
-    // localStorage.removeItem("thought");
-    // setThought("");
   }
 
   return (
