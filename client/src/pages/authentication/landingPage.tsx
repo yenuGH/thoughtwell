@@ -154,25 +154,37 @@ export function LandingPage() {
               )}
 
               <Center mt="xs">
-                <Button
-                  size="lg"
-                  color="pale-blue.5"
-                  radius="xl"
-                  variant="filled"
-                  style={{ color: "black" }}
-                  onClick={() => {
-                    attemptRegister();
-                  }}
+                <motion.div
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  Register
-                </Button>
+                  <Button
+                    size="lg"
+                    color="pale-blue.5"
+                    radius="xl"
+                    variant="filled"
+                    style={{ color: "black" }}
+                    onClick={() => {
+                      attemptRegister();
+                    }}
+                  >
+                    Register
+                  </Button>
+                </motion.div>
               </Center>
 
               <Center mt="lg">
-                <Button size="lg" color="deep-blue.9" radius="xl">
-                  Already have an account?&nbsp;{" "}
-                  <span style={{ textDecoration: "underline" }}> Login</span>
-                </Button>
+                <motion.div
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <Button size="lg" color="deep-blue.9" radius="xl">
+                    Already have an account?&nbsp;{" "}
+                    <span style={{ textDecoration: "underline" }}> Login</span>
+                  </Button>
+                </motion.div>
 
                 <motion.div
                   whileHover={{ scale: 1.2 }}
