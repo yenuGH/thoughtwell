@@ -11,6 +11,7 @@ import {
   getGradient,
 } from "@mantine/core";
 
+import AnimatedLayout from "../../routes/AnimatedLayout";
 import DepositButton from "../../widgets/deposit/depositButton.tsx";
 import WithdrawButton from "../../widgets/withdraw/withdrawButton.tsx";
 
@@ -27,37 +28,39 @@ export function HomePage() {
 
   return (
     <>
-      <div style={{ background: gradient }}>
-        <Stack>
-          <Container>
-            <Center>
-              <h1 style={{ textAlign: "center" }}>
-                How would you like to interact with the Well today?
-              </h1>
-            </Center>
-            {/* <Center>
+      <AnimatedLayout>
+        <div style={{ background: gradient }}>
+          <Stack>
+            <Container>
+              <Center>
+                <h1 style={{ textAlign: "center" }}>
+                  How would you like to interact with the Well today?
+                </h1>
+              </Center>
+              {/* <Center>
               <Text size="lg">
                 How would you like to interact with the Well today?
               </Text>
             </Center> */}
-          </Container>
+            </Container>
 
-          <Group justify="center">
-            <DepositButton></DepositButton>
+            <Group justify="center">
+              <DepositButton></DepositButton>
 
-            <WithdrawButton></WithdrawButton>
-          </Group>
+              <WithdrawButton></WithdrawButton>
+            </Group>
 
-          <Center style={{ height: "80vh" }}>
-            <Image
-              src="../src/assets/wishingwell.png"
-              height={300}
-              // margin-left="50px"
-              // width={250}
-            />
-          </Center>
-        </Stack>
-      </div>
+            <Center style={{ height: "80vh" }}>
+              <Image
+                src="../src/assets/wishingwell.png"
+                height={300}
+                // margin-left="50px"
+                // width={250}
+              />
+            </Center>
+          </Stack>
+        </div>
+      </AnimatedLayout>
     </>
   );
 }

@@ -3,6 +3,7 @@ import "@mantine/core/styles.css";
 import { createTheme, MantineProvider, Stack } from "@mantine/core";
 import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import AnimatedOutlet from "./AnimatedOutlet";
 
 // import { HomePage } from "../pages/homePage/homePage";
 // import { Header } from "../widgets/header/header";
@@ -75,17 +76,18 @@ export default function App() {
     <MantineProvider theme={myTheme}>
       <Stack gap={0} style={{ backgroundColor: "#5a6085" }}>
         {/* <Header /> */}
-        <AnimatePresence mode="wait">
+        {/* <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={location.pathname}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transform: "translateY(50%)" }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
             <Outlet />
           </motion.div>
-        </AnimatePresence>
+        </AnimatePresence> */}
+        <AnimatedOutlet />
         <Footer />
       </Stack>
     </MantineProvider>

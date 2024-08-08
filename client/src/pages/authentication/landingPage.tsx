@@ -15,6 +15,7 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./landingPage.module.css";
 import { useState } from "react";
+import AnimatedLayout from "../../routes/AnimatedLayout";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { motion } from "framer-motion";
@@ -88,17 +89,18 @@ export function LandingPage() {
 
   return (
     <>
-      <div style={{ background: gradient }}>
-        <Stack>
-          <Container>
-            <Center>
-              <h1 style={{ color: theme.colors.indigo[1] }}>
-                Welcome to Thoughtwell!
-              </h1>
-            </Center>
-            <Center>
-              <Group>
-                {/* <Button size="xl" variant="gradient"
+      <AnimatedLayout>
+        <div style={{ background: gradient }}>
+          <Stack>
+            <Container>
+              <Center>
+                <h1 style={{ color: theme.colors.indigo[1] }}>
+                  Welcome to Thoughtwell!
+                </h1>
+              </Center>
+              <Center>
+                <Group>
+                  {/* <Button size="xl" variant="gradient"
                   gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
                   radius="xl"
                   onClick={() => {
@@ -107,98 +109,101 @@ export function LandingPage() {
                 >
                   Register
                 </Button> */}
-                <Stack>
-                  <TextInput
-                    classNames={{ input: classes.textInput }}
-                    size="xl"
-                    radius="xl"
-                    placeholder="Enter your email address"
-                    style={{ width: "350px" }} // Adjust the width as needed
-                    value={email}
-                    onChange={(event) => setEmail(event.currentTarget.value)}
-                  />
+                  <Stack>
+                    <TextInput
+                      classNames={{ input: classes.textInput }}
+                      size="xl"
+                      radius="xl"
+                      placeholder="Enter your email address"
+                      style={{ width: "350px" }} // Adjust the width as needed
+                      value={email}
+                      onChange={(event) => setEmail(event.currentTarget.value)}
+                    />
 
-                  <PasswordInput
-                    classNames={{ input: classes.passwordInput }}
-                    size="xl"
-                    radius="xl"
-                    placeholder="Create a password"
-                    value={password}
-                    onChange={(event) => setPassword(event.currentTarget.value)}
-                  />
+                    <PasswordInput
+                      classNames={{ input: classes.passwordInput }}
+                      size="xl"
+                      radius="xl"
+                      placeholder="Create a password"
+                      value={password}
+                      onChange={(event) =>
+                        setPassword(event.currentTarget.value)
+                      }
+                    />
 
-                  <PasswordInput
-                    classNames={{ input: classes.passwordInput }}
-                    size="xl"
-                    radius="xl"
-                    placeholder="Confirm your password"
-                    value={confirmPassword}
-                    onChange={(event) =>
-                      setConfirmPassword(event.currentTarget.value)
-                    }
-                  />
-                </Stack>
-              </Group>
-            </Center>
-
-            {errorMessage && (
-              <Center>
-                <p style={{ color: "red", margin: 0, padding: 0 }}>
-                  {errorMessage}
-                </p>
+                    <PasswordInput
+                      classNames={{ input: classes.passwordInput }}
+                      size="xl"
+                      radius="xl"
+                      placeholder="Confirm your password"
+                      value={confirmPassword}
+                      onChange={(event) =>
+                        setConfirmPassword(event.currentTarget.value)
+                      }
+                    />
+                  </Stack>
+                </Group>
               </Center>
-            )}
 
-            <Center mt="xs">
-              <Button
-                size="lg"
-                color="pale-blue.5"
-                radius="xl"
-                variant="filled"
-                style={{ color: "black" }}
-                onClick={() => {
-                  attemptRegister();
-                }}
-              >
-                Register
-              </Button>
-            </Center>
+              {errorMessage && (
+                <Center>
+                  <p style={{ color: "red", margin: 0, padding: 0 }}>
+                    {errorMessage}
+                  </p>
+                </Center>
+              )}
 
-            <Center mt="lg">
-              <Button size="lg" color="deep-blue.9" radius="xl">
-                Already have an account?&nbsp;{" "}
-                <span style={{ textDecoration: "underline" }}> Login</span>
-              </Button>
-
-              <motion.div
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
+              <Center mt="xs">
                 <Button
-                  size="md"
-                  color="deep-blue.3"
-                  style={{ marginLeft: "10px" }}
-                  onClick={() => navigate("/main")}
+                  size="lg"
+                  color="pale-blue.5"
+                  radius="xl"
+                  variant="filled"
+                  style={{ color: "black" }}
+                  onClick={() => {
+                    attemptRegister();
+                  }}
                 >
-                  Continue as Guest
+                  Register
                 </Button>
-              </motion.div>
+              </Center>
+
+              <Center mt="lg">
+                <Button size="lg" color="deep-blue.9" radius="xl">
+                  Already have an account?&nbsp;{" "}
+                  <span style={{ textDecoration: "underline" }}> Login</span>
+                </Button>
+
+                <motion.div
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <Button
+                    size="md"
+                    color="deep-blue.3"
+                    style={{ marginLeft: "10px" }}
+                    onClick={() => navigate("/main")}
+                  >
+                    Continue as Guest
+                  </Button>
+                </motion.div>
+              </Center>
+            </Container>
+
+            <Group justify="center"></Group>
+
+            <Center style={{ height: "80vh" }}>
+              <Image
+                src="../src/assets/wishingwell.png"
+                height={300}
+                // margin-left="50px"
+                // width={250}
+              />
             </Center>
-          </Container>
-
-          <Group justify="center"></Group>
-
-          <Center style={{ height: "80vh" }}>
-            <Image
-              src="../src/assets/wishingwell.png"
-              height={300}
-              // margin-left="50px"
-              // width={250}
-            />
-          </Center>
-        </Stack>
-      </div>
+          </Stack>
+        </div>
+      </AnimatedLayout>
     </>
   );
 }
