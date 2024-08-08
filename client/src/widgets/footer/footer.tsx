@@ -1,25 +1,16 @@
-import {
-  Group,
-  Stack,
-  ActionIcon,
-  Title,
-  Divider,
-} from "@mantine/core";
+import { Group, Stack, ActionIcon, Title, Divider } from "@mantine/core";
 
-import {
-  IconBuildingBank,
-  IconBrandGithub
-} from "@tabler/icons-react"
+import { IconBuildingBank, IconBrandGithub } from "@tabler/icons-react";
 
 export function Footer(): JSX.Element {
   return (
     <>
-      <Stack style={{paddingTop:'16px', paddingBottom:'16px'}}>
+      <Stack style={{ paddingTop: "16px", paddingBottom: "16px" }}>
         {/* <Divider my="xs" /> */}
         <Group
           justify="right"
           align="center"
-          style={{ paddingRight: '32px' }} // Add padding to the right
+          style={{ paddingRight: "32px" }} // Add padding to the right
         >
           <ActionIcon
             component="a"
@@ -28,12 +19,9 @@ export function Footer(): JSX.Element {
             rel="noopener noreferrer"
             size="xl"
           >
-
             <IconBrandGithub size={24} />
           </ActionIcon>
         </Group>
-
-
       </Stack>
     </>
   );

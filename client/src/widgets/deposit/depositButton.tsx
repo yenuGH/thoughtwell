@@ -24,10 +24,10 @@ export default function Deposit() {
     <>
       <Modal opened={opened} onClose={close} title="Deposit a thought">
         <Textarea
-          label="Thought"
+          // label="Thought"
           placeholder="What's on your mind?"
           aria-label="Deposit a thought"
-          style={{ width: "100%" }}
+          style={{ width: "100%", padding: "10px"}}
           onChange={(event) => {
             // Update thought
             setThought(event.currentTarget.value);

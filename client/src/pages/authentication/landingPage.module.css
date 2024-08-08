@@ -1,24 +1,43 @@
 /* LandingPage.css */
 .textInput {
   &::placeholder {
-    color: white;
+    color: lightgray;
+    text-align: center;
   }
   background-color: var(--mantine-color-blue-7);
   color: white;
   font-size: 24px;
+  text-align: center;
 }
 
 /* Why the hell does textInput and passwordInput differ in how the placeholder is applied? */
 
+.mantine-PasswordInput-innerInput {
+  text-align: center;
+}
+
 .passwordInput {
   ::placeholder {
-    color: white;
+    color: lightgray;
+    text-align: center;
   }
   background-color: var(--mantine-color-blue-7);
   color: white;
   font-size: 24px;
+  /* &::input {
+    text-align: center;
+  }
+  &::innerInput {
+    text-align: center;
+  } */
+  text-align: center; /* Why the hell does this not work? */
 }
 
-.datePickerInputPlaceholder {
+/* .datePickerInputPlaceholder {
   color: var(--mantine-color-blue-5);
+} */
+
+.innerInput { 
+  text-align: center;
 }
+
