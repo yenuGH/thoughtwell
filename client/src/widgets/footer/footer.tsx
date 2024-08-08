@@ -14,8 +14,8 @@ import {
 export function Footer(): JSX.Element {
   return (
     <>
-      <Stack style={{paddingBottom:'16px'}}>
-        <Divider my="xs" />
+      <Stack style={{paddingTop:'16px', paddingBottom:'16px'}}>
+        {/* <Divider my="xs" /> */}
         <Group
           justify="right"
           align="center"

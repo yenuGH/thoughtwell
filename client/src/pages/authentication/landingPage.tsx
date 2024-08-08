@@ -9,8 +9,11 @@ import {
   Image,
   useMantineTheme,
   getGradient,
+  TextInput,
+  PasswordInput,
 } from "@mantine/core";
 import { NavLink, useNavigate } from "react-router-dom";
+import classes from "./landingPage.module.css";
 
 export function LandingPage() {
   // useEffect(() => {
@@ -32,25 +35,49 @@ export function LandingPage() {
             <Center>
               <Group>
 
-                <Button size="xl" variant="gradient"
+                {/* <Button size="xl" variant="gradient"
                   gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
                   radius="xl"
+                  onClick={() => {
+                    navigate('/register');
+                  }}
                 >
                   Register
-                </Button>
+                </Button> */}
+                <Stack>
+                  <TextInput
+                    classNames={{ input: classes.textInput }}
+                    size="xl"
+                    radius="xl"
+                    placeholder="Enter an email address"
+                    style={{ width: '350px' }} // Adjust the width as needed
+                  />
 
-                <Button size="xl" color='deep-blue.9' radius="xl">
-                  Sign In
-                </Button>
+                  <PasswordInput
+                    classNames={{ input: classes.passwordInput }}
+                    size="xl"
+                    radius="xl"
+                    placeholder="Create a password"
+                  />
 
+                  <PasswordInput
+                    classNames={{ input: classes.passwordInput }}
+                    size="xl"
+                    radius="xl"
+                    placeholder="Confirm your password"
+                  />
 
+                </Stack>
               </Group>
 
             </Center>
 
             <Center mt="lg">
+              <Button size="lg" color='deep-blue.9' radius="xl">
+                Already have an account?&nbsp; <span style={{ textDecoration: 'underline' }}> Login</span>
+              </Button>
               <Button
-                size="md" color="deep-blue.3"
+                size="md" color="deep-blue.3" style={{ marginLeft: '10px' }}
                 onClick={() => {
                   navigate('/main');
                 }}
@@ -75,7 +102,7 @@ export function LandingPage() {
           </Center>
 
         </Stack>
-      </div>
+      </div >
     </>
   );
 }

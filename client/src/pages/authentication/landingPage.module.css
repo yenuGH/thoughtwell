@@ -1,0 +1,24 @@
+/* LandingPage.css */
+.textInput {
+  &::placeholder {
+    color: white;
+  }
+  background-color: var(--mantine-color-blue-7);
+  color: white;
+  font-size: 24px;
+}
+
+/* Why the hell does textInput and passwordInput differ in how the placeholder is applied? */
+
+.passwordInput {
+  ::placeholder {
+    color: white;
+  }
+  background-color: var(--mantine-color-blue-7);
+  color: white;
+  font-size: 24px;
+}
+
+.datePickerInputPlaceholder {
+  color: var(--mantine-color-blue-5);
+}

@@ -19,4 +19,7 @@
   color: #888;
 }
 
-
+::placeholder {
+  color: #c18374; /* Replace with your desired color */
+  opacity: 1; /* Ensure the color is fully opaque */
+}

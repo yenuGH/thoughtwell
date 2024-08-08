@@ -29,13 +29,13 @@ export function HomePage() {
         <Stack>
           <Container>
             <Center>
-              <h1>Welcome to Thoughtwell!</h1>
+              <h1 style={{ textAlign: 'center'}}>How would you like to interact with the Well today?</h1>
             </Center>
-            <Center>
+            {/* <Center>
               <Text size="lg">
                 How would you like to interact with the Well today?
               </Text>
-            </Center>
+            </Center> */}
           </Container>
 
           <Group justify="center">

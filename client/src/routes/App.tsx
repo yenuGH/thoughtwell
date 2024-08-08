@@ -4,8 +4,8 @@ import { createTheme, MantineProvider, Stack } from "@mantine/core";
 import { Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { HomePage } from "../pages/homePage/homePage";
-import { Header } from "../widgets/header/header";
+// import { HomePage } from "../pages/homePage/homePage";
+// import { Header } from "../widgets/header/header";
 import { Footer } from "../widgets/footer/footer";
 
 import { firebaseController } from "../controllers/firebaseController";
