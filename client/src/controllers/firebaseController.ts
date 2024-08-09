@@ -12,7 +12,7 @@ import {
   addDoc,
   getDocs,
 } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 import { Thought } from "../interfaces/thoughtInterface";
 
@@ -28,6 +28,7 @@ const firebaseConfig = {
 
 var firebaseApp: any;
 var firestoreDatabase: any;
+let errorMessage: string | null = null;
 
 export const firebaseController = {
   initialize(): void {
@@ -93,6 +94,7 @@ export const firebaseController = {
       })
       .catch((error) => {
         console.log("Error during registration:", error.code, error.message);
+        errorMessage = error.message;
         return false;
       });
 
@@ -102,4 +104,33 @@ export const firebaseController = {
         return true;
     }
   },
+
+  async login(email: string, password: string): Promise<boolean> {
+    const auth = getAuth();
+    let userCredentials: any;
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        userCredentials = userCredential;
+        console.log("User logged in successfully:", user);
+        return true;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        errorMessage = error.message;
+        console.log("Error during login:", errorCode, errorMessage);
+        return false;
+      });
+      if (!userCredentials) {
+        return false;
+      } else {
+          return true;
+      }
+  },
+
+  // Method to get the error message
+  getErrorMessage(): string | null {
+    return errorMessage;
+  }
 };

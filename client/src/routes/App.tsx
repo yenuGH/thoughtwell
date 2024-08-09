@@ -68,6 +68,9 @@ export default function App() {
     },
     primaryColor: "space-cadet-purple",
     defaultRadius: 0,
+    fontFamily: "Verdana, sans-serif",
+    fontFamilyMonospace: "Monaco, Courier, monospace",
+    headings: { fontFamily: "Greycliff CF, sans-serif" },
   });
 
   const location = useLocation();

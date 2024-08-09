@@ -17,7 +17,7 @@ export default function registerGroup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -44,8 +44,9 @@ export default function registerGroup() {
       console.log("User registered successfully.");
       navigate("/main");
     } else {
-      setErrorMessage("Error during registration.");
-      console.log("Error during registration."); // Maybe we can pass the error message from firebaseController for duplicate acc?
+      const errorMsg = firebaseController.getErrorMessage();
+      setErrorMessage(errorMsg);
+      console.log(errorMsg); // Maybe we can pass the error message from firebaseController for duplicate acc?
     }
   }
 

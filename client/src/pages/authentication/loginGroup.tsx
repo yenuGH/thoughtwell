@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 export default function registerGroup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -24,23 +24,16 @@ export default function registerGroup() {
     if (email === "" || password === "") {
       setErrorMessage("Please fill in all fields.");
       return;
-    } else {
-      // if (!isMatching(password, confirmPassword)) {
-      //   setErrorMessage("Passwords do not match!");
-      //   return;
-      // }
     }
 
-    let isSuccessful: boolean = await firebaseController.register(
-      email,
-      password
-    );
+    let isSuccessful: boolean = await firebaseController.login(email, password);
     if (isSuccessful) {
-      console.log("User registered successfully.");
+      console.log("Firebase authenticated login successfully.");
       navigate("/main");
     } else {
-      setErrorMessage("Error during registration.");
-      console.log("Error during registration."); // Maybe we can pass the error message from firebaseController for duplicate acc?
+      const errorMsg = firebaseController.getErrorMessage();
+      setErrorMessage(errorMsg);
+      console.log(errorMsg); // Maybe we can pass the error message from firebaseController for duplicate acc?
     }
   }
 
@@ -79,7 +72,7 @@ export default function registerGroup() {
                 />
               </motion.div>
 
-              <Center mt="0" mb="0">
+              <Center mt="0" mb="15">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0, transition: { delay: 0.8 } }}

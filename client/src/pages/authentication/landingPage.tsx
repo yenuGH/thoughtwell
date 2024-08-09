@@ -27,7 +27,7 @@ export function LandingPage() {
 
   const [showRegisterButtons, setShowRegisterButtons] = useState(true);
   const handleLoginClick = () => {
-    setShowRegisterButtons(false);
+    setShowRegisterButtons((prev) => !prev);
   };
 
   return (
@@ -59,48 +59,76 @@ export function LandingPage() {
                   <RegisterGroup></RegisterGroup>
                   {/* </motion.div> */}
 
-                  <Center mt="lg">
-                    <Button
-                      size="lg"
-                      color="deep-blue.9"
-                      radius="xl"
-                      onClick={handleLoginClick}
+                  <AnimatePresence>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0, transition: { delay: 1.0 } }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
                     >
-                      Already have an account?&nbsp;{" "}
-                      <span style={{ textDecoration: "underline" }}>
-                        {" "}
-                        Login
-                      </span>
-                    </Button>
-                  </Center>
+                      <Center mt="lg">
+                        <Button
+                          size="lg"
+                          color="deep-blue.9"
+                          radius="xl"
+                          onClick={handleLoginClick}
+                        >
+                          Already have an account?&nbsp;
+                          <span style={{ textDecoration: "underline" }}>
+                            Login
+                          </span>
+                        </Button>
+                      </Center>
+                    </motion.div>
+                  </AnimatePresence>
                 </>
               )}
 
               {!showRegisterButtons && (
                 <>
                   <LoginGroup></LoginGroup>
+                  <AnimatePresence>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0, transition: { delay: 1.0 } }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <Center>
+                        <Button
+                          size="lg"
+                          color="deep-blue.9"
+                          radius="xl"
+                          onClick={handleLoginClick}
+                        >
+                          Back to&nbsp;
+                          <span style={{ textDecoration: "underline" }}>
+                            Register
+                          </span>
+                        </Button>
+                      </Center>
+                    </motion.div>
+                  </AnimatePresence>
                 </>
               )}
 
-              {/* <motion.div
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Button
-                  size="md"
-                  color="deep-blue.3"
-                  style={{ marginLeft: "10px" }}
-                  onClick={() => navigate("/main")}
-                >
-                  Continue as Guest
-                </Button>
-              </motion.div> */}
             </Container>
 
             <Group justify="center"></Group>
 
-            <Center style={{ height: "80vh" }}>
+            <Center style={{ height: "50vh" }}>
               <Image
                 src="../src/assets/wishingwell.png"
                 height={300}
