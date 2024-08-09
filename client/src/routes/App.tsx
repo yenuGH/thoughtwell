@@ -65,7 +65,7 @@ export default function App() {
     },
     primaryColor: "space-cadet-purple",
     defaultRadius: 0,
-    // fontFamily: "Verdana, sans-serif",
+    fontFamily: "Anybody Variable, system-ui",
     // fontFamilyMonospace: "Monaco, Courier, monospace",
     // headings: { fontFamily: "Greycliff CF, sans-serif" },
   });

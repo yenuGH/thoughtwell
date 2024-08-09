@@ -59,7 +59,7 @@ export default function titleGroup() {
                 className="text"
                 style={{
                   color: theme.colors.indigo[1],
-                  fontFamily: "Anybody, system-ui",
+                  fontFamily: "Anybody Variable, system-ui",
                   fontSize: "1.5rem",
                   marginTop: 0,
                   marginBottom: "50px",
