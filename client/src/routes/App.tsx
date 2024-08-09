@@ -1,12 +1,9 @@
 import "./App.css";
 import "@mantine/core/styles.css";
 import { createTheme, MantineProvider, Stack } from "@mantine/core";
-import { Outlet, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 import AnimatedOutlet from "./AnimatedOutlet";
 
-// import { HomePage } from "../pages/homePage/homePage";
-// import { Header } from "../widgets/header/header";
 import { Footer } from "../widgets/footer/footer";
 
 import { firebaseController } from "../controllers/firebaseController";
@@ -68,9 +65,9 @@ export default function App() {
     },
     primaryColor: "space-cadet-purple",
     defaultRadius: 0,
-    fontFamily: "Verdana, sans-serif",
-    fontFamilyMonospace: "Monaco, Courier, monospace",
-    headings: { fontFamily: "Greycliff CF, sans-serif" },
+    // fontFamily: "Verdana, sans-serif",
+    // fontFamilyMonospace: "Monaco, Courier, monospace",
+    // headings: { fontFamily: "Greycliff CF, sans-serif" },
   });
 
   const location = useLocation();

@@ -6,29 +6,42 @@ import {
   TextInput,
   PasswordInput,
 } from "@mantine/core";
-import classes from "./landingPage.module.css";
+import classes from "../landingPage.module.css";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { firebaseController } from "../../controllers/firebaseController";
+import { firebaseController } from "../../../controllers/firebaseController";
 import { useNavigate } from "react-router-dom";
 
 export default function registerGroup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  async function handleLoginButton(): Promise<void> {
-    if (email === "" || password === "") {
+  function isMatching(password: string, confirmPassword: string) {
+    return password === confirmPassword;
+  }
+
+  async function handleRegisterButton(): Promise<void> {
+    if (email === "" || password === "" || confirmPassword === "") {
       setErrorMessage("Please fill in all fields.");
       return;
+    } else {
+      if (!isMatching(password, confirmPassword)) {
+        setErrorMessage("Passwords do not match!");
+        return;
+      }
     }
 
-    let isSuccessful: boolean = await firebaseController.login(email, password);
+    let isSuccessful: boolean = await firebaseController.register(
+      email,
+      password
+    );
     if (isSuccessful) {
-      console.log("Firebase authenticated login successfully.");
+      console.log("User registered successfully.");
       navigate("/main");
     } else {
       const errorMsg = firebaseController.getErrorMessage();
@@ -67,12 +80,28 @@ export default function registerGroup() {
                   classNames={{ input: classes.passwordInput }}
                   size="xl"
                   radius="xl"
-                  placeholder="Enter your password"
+                  placeholder="Create a password"
                   onChange={(event) => setPassword(event.currentTarget.value)}
                 />
               </motion.div>
 
-              <Center mt="0" mb="15">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: 0.7 } }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <PasswordInput
+                  classNames={{ input: classes.passwordInput }}
+                  size="xl"
+                  radius="xl"
+                  placeholder="Confirm your password"
+                  onChange={(event) =>
+                    setConfirmPassword(event.currentTarget.value)
+                  }
+                />
+              </motion.div>
+
+              <Center mt="0" mb="0">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0, transition: { delay: 0.8 } }}
@@ -93,10 +122,10 @@ export default function registerGroup() {
                     variant="filled"
                     style={{ color: "black" }}
                     onClick={() => {
-                      handleLoginButton();
+                      handleRegisterButton();
                     }}
                   >
-                    Login
+                    Register
                   </Button>
                 </motion.div>
               </Center>

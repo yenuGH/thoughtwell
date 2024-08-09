@@ -8,13 +8,16 @@ import {
   useMantineTheme,
   getGradient,
 } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import AnimatedLayout from "../../routes/AnimatedLayout";
+import { useEffect, useState } from "react";
 
+import AnimatedLayout from "../../routes/AnimatedLayout";
 import { AnimatePresence, motion } from "framer-motion";
-import RegisterGroup from "./registerGroup.tsx";
-import LoginGroup from "./loginGroup.tsx";
+
+import "@fontsource/bungee";
+import "@fontsource-variable/anybody";
+import TitleGroup from "./widgets/titleGroup.tsx";
+import RegisterGroup from "./widgets/registerGroup.tsx";
+import LoginGroup from "./widgets/loginGroup.tsx";
 
 export function LandingPage() {
   const theme = useMantineTheme();
@@ -23,12 +26,19 @@ export function LandingPage() {
     theme
   );
 
-  const navigate = useNavigate();
-
   const [showRegisterButtons, setShowRegisterButtons] = useState(true);
   const handleLoginClick = () => {
     setShowRegisterButtons((prev) => !prev);
   };
+  // Could be useful in the future to fix scrolling on reload issue
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   history.scrollRestoration = "manual";
+
+  //   return () => {
+  //     history.scrollRestoration = "auto";
+  //   };
+  // }, []);
 
   return (
     <>
@@ -36,14 +46,10 @@ export function LandingPage() {
         <div style={{ background: gradient }}>
           <Stack>
             <Container>
-              <Center>
-                <h1 style={{ color: theme.colors.indigo[1] }}>
-                  Welcome to Thoughtwell!
-                </h1>
-              </Center>
+              {/* titleGroup.tsx */}
+              <TitleGroup></TitleGroup>
 
               {/* registerGroup.tsx */}
-              {/* <AnimatePresence> */}
               {showRegisterButtons && (
                 <>
                   {/* <motion.div
@@ -90,6 +96,7 @@ export function LandingPage() {
                 </>
               )}
 
+              {/* loginGroup.tsx */}
               {!showRegisterButtons && (
                 <>
                   <LoginGroup></LoginGroup>
@@ -123,10 +130,7 @@ export function LandingPage() {
                   </AnimatePresence>
                 </>
               )}
-
             </Container>
-
-            <Group justify="center"></Group>
 
             <Center style={{ height: "50vh" }}>
               <Image

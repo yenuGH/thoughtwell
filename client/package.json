@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/anybody": "^5.0.21",
+    "@fontsource/bungee": "^5.0.21",
     "@mantine/carousel": "^7.11.2",
     "@mantine/charts": "^7.11.2",
     "@mantine/core": "^7.11.2",
