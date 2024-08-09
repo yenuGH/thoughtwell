@@ -19,14 +19,9 @@ import AnimatedLayout from "../../routes/AnimatedLayout";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { motion } from "framer-motion";
+import { firebaseController } from "../../controllers/firebaseController";
 
 export function LandingPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const theme = useMantineTheme();
   const gradient = getGradient(
     { deg: 180, from: "deep-blue.7", to: "space-cadet-purple.3" },
@@ -34,24 +29,7 @@ export function LandingPage() {
   );
   const navigate = useNavigate();
 
-  const auth = getAuth();
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed up
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
-
-  function isMatching(password: string, confirmPassword: string) {
-    return password === confirmPassword;
-  }
-
-  const attemptRegister = async () => {
+  /* const attemptRegister = async () => {
     setIsSubmitting(true);
     try {
       if (email === "" || password === "" || confirmPassword === "") {
@@ -85,7 +63,25 @@ export function LandingPage() {
       setErrorMessage("Unexpected error occurred. Please try again.");
       setIsSubmitting(false);
     }
-  };
+  }; */
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleRegisterButton(): Promise<void> {
+    if (email === "" || password === "") {
+      console.log("Please fill in all fields.");
+      return;
+    }
+
+    let isSuccessful: boolean = await firebaseController.register(email, password);
+    if (isSuccessful) {
+      console.log("User registered successfully.");
+      navigate("/main");
+    } else {
+      console.log("Error during registration.");
+    }
+  }
 
   return (
     <>
@@ -100,15 +96,6 @@ export function LandingPage() {
               </Center>
               <Center>
                 <Group>
-                  {/* <Button size="xl" variant="gradient"
-                  gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
-                  radius="xl"
-                  onClick={() => {
-                    navigate('/register');
-                  }}
-                >
-                  Register
-                </Button> */}
                   <Stack>
                     <TextInput
                       classNames={{ input: classes.textInput }}
@@ -116,8 +103,7 @@ export function LandingPage() {
                       radius="xl"
                       placeholder="Enter your email address"
                       style={{ width: "350px" }} // Adjust the width as needed
-                      value={email}
-                      onChange={(event) => setEmail(event.currentTarget.value)}
+                        onChange={(event) => setEmail(event.currentTarget.value)}
                     />
 
                     <PasswordInput
@@ -125,10 +111,6 @@ export function LandingPage() {
                       size="xl"
                       radius="xl"
                       placeholder="Create a password"
-                      value={password}
-                      onChange={(event) =>
-                        setPassword(event.currentTarget.value)
-                      }
                     />
 
                     <PasswordInput
@@ -136,22 +118,19 @@ export function LandingPage() {
                       size="xl"
                       radius="xl"
                       placeholder="Confirm your password"
-                      value={confirmPassword}
-                      onChange={(event) =>
-                        setConfirmPassword(event.currentTarget.value)
-                      }
+                      onChange={(event) => setPassword(event.currentTarget.value)}
                     />
                   </Stack>
                 </Group>
               </Center>
 
-              {errorMessage && (
+              {/* {errorMessage && (
                 <Center>
                   <p style={{ color: "red", margin: 0, padding: 0 }}>
                     {errorMessage}
                   </p>
                 </Center>
-              )}
+              )} */}
 
               <Center mt="xs">
                 <motion.div
@@ -166,7 +145,7 @@ export function LandingPage() {
                     variant="filled"
                     style={{ color: "black" }}
                     onClick={() => {
-                      attemptRegister();
+                      handleRegisterButton();
                     }}
                   >
                     Register

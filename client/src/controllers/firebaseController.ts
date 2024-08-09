@@ -4,7 +4,15 @@
 // https://stackoverflow.com/questions/62324667/firebaseerror-missing-or-insufficient-permissions-with-react-js "if false" removed for testing
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, doc, setDoc, addDoc, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  addDoc,
+  getDocs,
+} from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import { Thought } from "../interfaces/thoughtInterface";
 
@@ -39,21 +47,20 @@ export const firebaseController = {
 
   async depositThought(thought: string): Promise<void> {
     try {
-        console.log("Depositing thought: ", thought);
+      console.log("Depositing thought: ", thought);
 
-        // generate the ID for the thought first
-        const thoughtRef = doc(collection(firestoreDatabase, "thoughts"));
-        await setDoc(thoughtRef, {
-            id: thoughtRef.id,
-            userId: "placeholder", // all thoughts will have placeholder id for now
-            thought: thought,
-            date: new Date(),
-        })
+      // generate the ID for the thought first
+      const thoughtRef = doc(collection(firestoreDatabase, "thoughts"));
+      await setDoc(thoughtRef, {
+        id: thoughtRef.id,
+        userId: "placeholder", // all thoughts will have placeholder id for now
+        thought: thought,
+        date: new Date(),
+      });
 
-        console.log("Document written with ID: ", thoughtRef.id);
-    }
-    catch (error) {
-        console.error("Error adding document: ", error);
+      console.log("Document written with ID: ", thoughtRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
     }
   },
 
@@ -63,7 +70,7 @@ export const firebaseController = {
     const thoughts: Thought[] = [];
 
     thoughtsSnapshot.forEach((doc) => {
-        thoughts.push(doc.data() as Thought);
+      thoughts.push(doc.data() as Thought);
     });
 
     // grab a random index from 0 to the length of the local storage
@@ -71,5 +78,28 @@ export const firebaseController = {
     const randomIndex = Math.floor(Math.random() * thoughtsLength);
 
     return thoughts[randomIndex];
-  }
+  },
+
+  async register(email: string, password: string): Promise<boolean> {
+    const auth = getAuth();
+    let userCredentials: any;
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log("User registered successfully:", userCredential.user);
+        // if successful, return true
+        userCredentials = userCredential;
+        return true;
+      })
+      .catch((error) => {
+        console.log("Error during registration:", error.code, error.message);
+        return false;
+      });
+
+    if (!userCredentials) {
+      return false;
+    } else {
+        return true;
+    }
+  },
 };
