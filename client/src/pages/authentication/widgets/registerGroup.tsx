@@ -54,103 +54,117 @@ export default function registerGroup() {
     <>
       <AnimatePresence>
         <Center>
-          <Group>
-            <Stack>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0, transition: { delay: 0.5 } }}
-                exit={{ opacity: 0, y: -20 }}
-              >
-                <TextInput
-                  classNames={{ input: classes.textInput }}
-                  size="xl"
-                  radius="xl"
-                  placeholder="Enter your email address"
-                  style={{ width: "350px" }} // Adjust the width as needed
-                  onChange={(event) => setEmail(event.currentTarget.value)}
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0, transition: { delay: 0.6 } }}
-                exit={{ opacity: 0, y: -20 }}
-              >
-                <PasswordInput
-                  classNames={{ input: classes.passwordInput }}
-                  size="xl"
-                  radius="xl"
-                  placeholder="Create a password"
-                  onChange={(event) => setPassword(event.currentTarget.value)}
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0, transition: { delay: 0.7 } }}
-                exit={{ opacity: 0, y: -20 }}
-              >
-                <PasswordInput
-                  classNames={{ input: classes.passwordInput }}
-                  size="xl"
-                  radius="xl"
-                  placeholder="Confirm your password"
-                  onChange={(event) =>
-                    setConfirmPassword(event.currentTarget.value)
-                  }
-                />
-              </motion.div>
-
-              <Center mt="0" mb="0">
+          <Stack>
+            <Group>
+              <Stack>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0, transition: { delay: 0.8 } }}
+                  animate={{ opacity: 1, y: 0, transition: { delay: 0.5 } }}
                   exit={{ opacity: 0, y: -20 }}
-                  // transition={{
-                  //   type: "spring",
-                  //   stiffness: 400,
-                  //   damping: 17,
-                  //   delay: 0.8,
-                  // }}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
                 >
-                  <Button
-                    size="lg"
-                    color="pale-blue.5"
+                  <TextInput
+                    classNames={{ input: classes.textInput }}
+                    size="xl"
                     radius="xl"
-                    variant="filled"
-                    style={{ color: "black" }}
-                    onClick={() => {
-                      handleRegisterButton();
-                    }}
-                  >
-                    Register
-                  </Button>
+                    placeholder="Enter your email address"
+                    style={{ width: "350px" }} // Adjust the width as needed
+                    onChange={(event) => setEmail(event.currentTarget.value)}
+                  />
                 </motion.div>
-              </Center>
 
-              {errorMessage && (
-                <Center>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0, transition: { delay: 0.6 } }}
+                  exit={{ opacity: 0, y: -20 }}
+                >
+                  <PasswordInput
+                    classNames={{ input: classes.passwordInput }}
+                    size="xl"
+                    radius="xl"
+                    placeholder="Create a password"
+                    style={{ width: "350px" }} // Adjust the width as needed
+                    onChange={(event) => setPassword(event.currentTarget.value)}
+                  />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0, transition: { delay: 0.7 } }}
+                  exit={{ opacity: 0, y: -20 }}
+                >
+                  <PasswordInput
+                    classNames={{ input: classes.passwordInput }}
+                    size="xl"
+                    radius="xl"
+                    placeholder="Confirm your password"
+                    style={{ width: "350px" }} // Adjust the width as needed
+                    onChange={(event) =>
+                      setConfirmPassword(event.currentTarget.value)
+                    }
+                  />
+                </motion.div>
+
+                <Center mt="0" mb="0">
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.5 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20,
-                      duration: 0.5,
-                    }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0, transition: { delay: 0.8 } }}
+                    exit={{ opacity: 0, y: -20 }}
+                    // transition={{
+                    //   type: "spring",
+                    //   stiffness: 400,
+                    //   damping: 17,
+                    //   delay: 0.8,
+                    // }}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
                   >
-                    <p style={{ color: "red", margin: 0, padding: 0 }}>
-                      {errorMessage}
-                    </p>
+                    <Button
+                      size="lg"
+                      color="pale-blue.5"
+                      radius="xl"
+                      variant="filled"
+                      style={{ color: "black" }}
+                      onClick={() => {
+                        handleRegisterButton();
+                      }}
+                    >
+                      Register
+                    </Button>
                   </motion.div>
                 </Center>
-              )}
-            </Stack>
-          </Group>
+              </Stack>
+            </Group>
+            {errorMessage && (
+              <Center>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                    duration: 0.5,
+                  }}
+                  style={{
+                    maxWidth: "300px", // Set a maximum width for the container
+                    overflow: "hidden", // Hide overflow content
+                    wordWrap: "break-word", // Ensure long words are wrapped
+                  }}
+                >
+                  <p
+                    style={{
+                      color: "red",
+                      margin: 0,
+                      padding: 0,
+                    }}
+                  >
+                    {errorMessage}
+                  </p>
+                </motion.div>
+              </Center>
+            )}
+          </Stack>
         </Center>
       </AnimatePresence>
     </>

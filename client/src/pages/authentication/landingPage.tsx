@@ -18,6 +18,10 @@ import "@fontsource-variable/anybody";
 import TitleGroup from "./widgets/titleGroup.tsx";
 import RegisterGroup from "./widgets/registerGroup.tsx";
 import LoginGroup from "./widgets/loginGroup.tsx";
+import styles from "./landingPage.module.css";
+
+import { Stars, Cloud } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 
 export function LandingPage() {
   const theme = useMantineTheme();
@@ -43,7 +47,24 @@ export function LandingPage() {
   return (
     <>
       <AnimatedLayout>
-        <div style={{ background: gradient }}>
+        <motion.section
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
+          transition={{ duration: 0.5 }}
+          style={{
+            background: gradient,
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div className={styles.starsBackground}>
+            <Canvas>
+              <Stars radius={100} count={2500} factor={2} fade speed={2} />
+              {/* <Cloud position={[30, 5, -5]} speed={0.2} opacity={0.2} color={"white"}/> */}
+            </Canvas>
+          </div>
+
           <Stack>
             <Container>
               {/* titleGroup.tsx */}
@@ -102,7 +123,7 @@ export function LandingPage() {
                       whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      <Center>
+                      <Center style={{ paddingTop: "15px" }}>
                         <Button
                           size="lg"
                           color="deep-blue.9"
@@ -130,7 +151,7 @@ export function LandingPage() {
               />
             </Center>
           </Stack>
-        </div>
+        </motion.section>
       </AnimatedLayout>
     </>
   );
