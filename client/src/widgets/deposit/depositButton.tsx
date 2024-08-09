@@ -10,6 +10,7 @@ import { motion } from "framer-motion"
 export default function Deposit() {
   const [opened, { open, close }] = useDisclosure(false);
   const [thought, setThought] = useState("");
+  
 
   async function depositThought() {
     // soemthing to do with local storage
