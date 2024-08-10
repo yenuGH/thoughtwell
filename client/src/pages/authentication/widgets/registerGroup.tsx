@@ -5,6 +5,7 @@ import {
   Button,
   TextInput,
   PasswordInput,
+  Loader,
 } from "@mantine/core";
 import classes from "../landingPage.module.css";
 
@@ -18,6 +19,8 @@ export default function registerGroup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -35,18 +38,23 @@ export default function registerGroup() {
         return;
       }
     }
-
+    setIsLoading(true); // Show loading spinner
     let isSuccessful: boolean = await firebaseController.register(
       email,
       password
     );
+    setIsLoading(false); // Hide loading spinner
+
     if (isSuccessful) {
       console.log("User registered successfully.");
-      navigate("/main");
+      setShowSuccess(true);
+      setTimeout(() => {
+        navigate("/main");
+      }, 1500); // Show success effect for 1.5 seconds before navigating
     } else {
       const errorMsg = firebaseController.getErrorMessage();
       setErrorMessage(errorMsg);
-      console.log(errorMsg); // Maybe we can pass the error message from firebaseController for duplicate acc?
+      console.log(errorMsg); 
     }
   }
 
@@ -134,7 +142,7 @@ export default function registerGroup() {
                 </Center>
               </Stack>
             </Group>
-            {errorMessage && (
+            {errorMessage && !isLoading && !showSuccess &&(
               <Center>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.5 }}
@@ -164,6 +172,36 @@ export default function registerGroup() {
                 </motion.div>
               </Center>
             )}
+            <Center>
+              {isLoading && !showSuccess && (
+                <Center>
+                  <Loader color="indigo" size="lg" />
+                </Center>
+              )}
+              <AnimatePresence>
+                {showSuccess && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    style={{
+                      // position: "fixed",
+                      // top: "50%",
+                      // left: "50%",
+                      // transform: "translate(-50%, -50%)",
+                      // background: "lightgreen",
+                      color: "white",
+                      padding: "12px",
+                      borderRadius: "20px",
+                      zIndex: 1000,
+                    }}
+                  >
+                    Register Successful!
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Center>
           </Stack>
         </Center>
       </AnimatePresence>

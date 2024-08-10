@@ -112,7 +112,7 @@ export default function registerGroup() {
                 </Center>
               </Stack>
             </Group>
-            {errorMessage && (
+            {errorMessage && !isLoading && !showSuccess &&(
               <Center>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.5 }}
@@ -139,7 +139,7 @@ export default function registerGroup() {
             <Center>
               {isLoading && !showSuccess && (
                 <Center>
-                  <Loader size="lg" />
+                  <Loader color="indigo" size="lg" />
                 </Center>
               )}
               <AnimatePresence>
