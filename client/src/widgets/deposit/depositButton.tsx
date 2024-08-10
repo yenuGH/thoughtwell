@@ -5,16 +5,15 @@ import { useState } from "react";
 
 import { firebaseController } from "../../controllers/firebaseController";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 export default function Deposit() {
   const [opened, { open, close }] = useDisclosure(false);
   const [thought, setThought] = useState("");
-  
 
   async function depositThought() {
     // soemthing to do with local storage
-    // localStorage.setItem(uuid(), thought); 
+    // localStorage.setItem(uuid(), thought);
 
     // deposit the thought into firebase here
     await firebaseController.depositThought(thought);
@@ -24,11 +23,11 @@ export default function Deposit() {
   return (
     <>
       <Modal opened={opened} onClose={close} title="Deposit a thought">
-        <Textarea
+        <Textarea 
           // label="Thought"
           placeholder="What's on your mind?"
           aria-label="Deposit a thought"
-          style={{ width: "100%", padding: "10px"}}
+          style={{ width: "100%", padding: "10px" }}
           onChange={(event) => {
             // Update thought
             setThought(event.currentTarget.value);
@@ -55,11 +54,17 @@ export default function Deposit() {
         whileTap={{ scale: 0.9 }}
         transition={{ type: "spring", stiffness: 400, damping: 17 }}
       >
-        <Button size="xl" color="teal" variant="light" onClick={open}>
+        <Button
+          size="xl"
+          color="teal.6"
+          radius="xl"
+          variant="filled"
+          style={{ color: "white" }}
+          onClick={open}
+        >
           Deposit
         </Button>
       </motion.div>
-      
     </>
   );
 }

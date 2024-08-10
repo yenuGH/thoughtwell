@@ -7,11 +7,11 @@ import {
   PasswordInput,
   Loader,
 } from "@mantine/core";
-import classes from "../landingPage.module.css";
+import classes from "../../pages/authentication/landingPage.module.css";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { firebaseController } from "../../../controllers/firebaseController";
+import { firebaseController } from "../../controllers/firebaseController";
 import { useNavigate } from "react-router-dom";
 
 export default function registerGroup() {
@@ -101,7 +101,7 @@ export default function registerGroup() {
                       color="pale-blue.5"
                       radius="xl"
                       variant="filled"
-                      style={{ color: "black" }}
+                      style={{ color: "white" }}
                       onClick={() => {
                         handleLoginButton();
                       }}

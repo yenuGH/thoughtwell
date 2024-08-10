@@ -4,7 +4,7 @@
 
 .textInput {
   &::placeholder {
-    color: darkgray;
+    color: gray;
     text-align: left;
   }
   background-color: var(--mantine-color-blue-2);
@@ -21,7 +21,7 @@
 
 .passwordInput {
   ::placeholder {
-    color: darkgray;
+    color: gray;
     text-align: left;
   }
   background-color: var(--mantine-color-blue-2);

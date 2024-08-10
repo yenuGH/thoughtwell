@@ -15,16 +15,18 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import "@fontsource/bungee";
 import "@fontsource-variable/anybody";
-import TitleGroup from "./widgets/titleGroup.tsx";
-import RegisterGroup from "./widgets/registerGroup.tsx";
-import LoginGroup from "./widgets/loginGroup.tsx";
+import TitleGroup from "../../widgets/titleGroup/titleGroup.tsx";
+import RegisterGroup from "../../widgets/registerGroup/registerGroup.tsx";
+import LoginGroup from "../../widgets/loginGroup/loginGroup.tsx";
 import styles from "./landingPage.module.css";
 
 import { Stars, Cloud } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { useNavigate } from "react-router-dom";
 
 export function LandingPage() {
   const theme = useMantineTheme();
+  const navigate = useNavigate();
   const gradient = getGradient(
     { deg: 180, from: "deep-blue.9", to: "space-cadet-purple.7" },
     theme
@@ -103,6 +105,39 @@ export function LandingPage() {
                       </Center>
                     </motion.div>
                   </AnimatePresence>
+                  <Center>
+                    <AnimatePresence>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                          transition: { delay: 1.2 },
+                        }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 17,
+                        }}
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Center
+                          style={{ padding: "0px", margin: "0px" }}
+                        ></Center>
+                        <Button
+                          size="lg"
+                          color="deep-blue.9"
+                          radius="xl"
+                          onClick={() => navigate("/main")}
+                          style={{ marginTop: "15px" }}
+                        >
+                          Continue as Guest
+                        </Button>
+                      </motion.div>
+                    </AnimatePresence>
+                  </Center>
                 </>
               )}
 

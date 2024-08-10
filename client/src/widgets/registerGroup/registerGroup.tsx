@@ -7,11 +7,11 @@ import {
   PasswordInput,
   Loader,
 } from "@mantine/core";
-import classes from "../landingPage.module.css";
+import classes from "../../pages/authentication/landingPage.module.css";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { firebaseController } from "../../../controllers/firebaseController";
+import { firebaseController } from "../../controllers/firebaseController";
 import { useNavigate } from "react-router-dom";
 
 export default function registerGroup() {
@@ -54,7 +54,7 @@ export default function registerGroup() {
     } else {
       const errorMsg = firebaseController.getErrorMessage();
       setErrorMessage(errorMsg);
-      console.log(errorMsg); 
+      console.log(errorMsg);
     }
   }
 
@@ -131,7 +131,7 @@ export default function registerGroup() {
                       color="pale-blue.5"
                       radius="xl"
                       variant="filled"
-                      style={{ color: "black" }}
+                      style={{ color: "white" }}
                       onClick={() => {
                         handleRegisterButton();
                       }}
@@ -142,7 +142,7 @@ export default function registerGroup() {
                 </Center>
               </Stack>
             </Group>
-            {errorMessage && !isLoading && !showSuccess &&(
+            {errorMessage && !isLoading && !showSuccess && (
               <Center>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.5 }}
@@ -202,6 +202,7 @@ export default function registerGroup() {
                 )}
               </AnimatePresence>
             </Center>
+            
           </Stack>
         </Center>
       </AnimatePresence>
