@@ -58,6 +58,12 @@ export default function registerGroup() {
     }
   }
 
+  const handleEnterKey = (event: { key: string; }) => {
+    if (event.key === 'Enter') {
+      handleRegisterButton();
+    }
+  }
+
   return (
     <>
       <AnimatePresence>
@@ -109,6 +115,7 @@ export default function registerGroup() {
                     onChange={(event) =>
                       setConfirmPassword(event.currentTarget.value)
                     }
+                    onKeyDown={handleEnterKey}
                   />
                 </motion.div>
 

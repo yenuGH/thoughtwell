@@ -23,6 +23,7 @@ import styles from "./landingPage.module.css";
 import { Stars, Cloud } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useNavigate } from "react-router-dom";
+import { firebaseController } from "../../controllers/firebaseController.ts";
 
 export function LandingPage() {
   const theme = useMantineTheme();
@@ -45,6 +46,10 @@ export function LandingPage() {
   //     history.scrollRestoration = "auto";
   //   };
   // }, []);
+
+  // useEffect(() => {
+  //   firebaseController.signOut();
+  // });
 
   return (
     <>
