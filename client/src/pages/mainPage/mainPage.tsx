@@ -10,6 +10,7 @@ import {
   useMantineTheme,
   getGradient,
   UnstyledButton,
+  Flex,
 } from "@mantine/core";
 
 import AnimatedLayout from "../../routes/AnimatedLayout.tsx";
@@ -18,8 +19,10 @@ import WithdrawButton from "../../widgets/withdraw/withdrawButton.tsx";
 import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SignOutGroup from "../../widgets/signOutGroup.tsx";
+import { AnimatePresence, motion } from "framer-motion";
 
-export function HomePage() {
+export function MainPage() {
   // useEffect(() => {
   //   document.title = "Thoughtwell";
   // }, []);
@@ -29,61 +32,61 @@ export function HomePage() {
     { deg: 180, from: "deep-blue.7", to: "space-cadet-purple.4" },
     theme
   );
-  const [currentUser, updateCurrentUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        updateCurrentUser(user);
-      } else {
-        updateCurrentUser(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const handleSignOut = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-      })
-      .catch((error) => {
-        // An error happened.
-      });
-  };
   const navigate = useNavigate();
 
   return (
     <>
       <AnimatedLayout>
         <div style={{ background: gradient }}>
-          <Stack>
-            <Container style={{ marginTop: "200px" }}>
-              <Center>
-                <h1 style={{ textAlign: "center" }}>
-                  How would you like to interact with the Well today?
-                </h1>
-              </Center>
-            </Container>
+          <AnimatePresence>
+            <motion.section
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.5 }}
+              style={{
+                background: gradient,
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              <Flex
+                justify="flex-end"
+                style={{
+                  paddingTop: "0px",
+                  paddingRight: "20px",
+                  textAlign: "right",
+                }}
+              >
+                <SignOutGroup></SignOutGroup>
+              </Flex>
+              <Stack>
+                <Container style={{ marginTop: "100px" }}>
+                  <Center>
+                    <h1 style={{ textAlign: "center" }}>
+                      How would you like to interact today?
+                    </h1>
+                  </Center>
+                </Container>
 
-            <Group justify="center" gap="xl">
-              <DepositButton></DepositButton>
+                <Group justify="center" gap="xl">
+                  <DepositButton></DepositButton>
 
-              <WithdrawButton></WithdrawButton>
-            </Group>
+                  <WithdrawButton></WithdrawButton>
+                </Group>
 
-            <Center style={{ height: "80vh" }}>
-              {/* <Image
+                <Center style={{ height: "80vh" }}>
+                  {/* <Image
                 src="../src/assets/birdseyewell.png"
                 height={900}
                 // margin-left="50px"
                 // width={250}
               /> */}
-            </Center>
-          </Stack>
+                </Center>
+              </Stack>
+            </motion.section>
+          </AnimatePresence>
         </div>
       </AnimatedLayout>
     </>

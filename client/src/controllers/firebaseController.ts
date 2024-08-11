@@ -12,7 +12,7 @@ import {
   addDoc,
   getDocs,
 } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 import { Thought } from "../interfaces/thoughtInterface";
 
@@ -132,5 +132,18 @@ export const firebaseController = {
   // Method to get the error message
   getErrorMessage(): string | null {
     return errorMessage;
-  }
+  },
+
+  async signOut(): Promise<void> {
+    const auth = getAuth();
+    await signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("Signed out");
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log("Error during sign out:", error);
+      });
+  },
 };

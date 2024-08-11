@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './routes/App.tsx'
-import { HomePage } from './pages/mainPage/mainPage.tsx'
+import { MainPage } from './pages/mainPage/mainPage.tsx'
 import { LandingPage } from './pages/authentication/landingPage.tsx'
 
 import {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/main",
-        element: <HomePage />,
+        element: <MainPage />,
       },
     ],
   },

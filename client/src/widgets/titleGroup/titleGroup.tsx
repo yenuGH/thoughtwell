@@ -67,7 +67,7 @@ export default function titleGroup() {
               >
                 Think{" "}
                 {/* This is the animation for words coming in */}
-                <motion.div
+                <motion.span
                   key={currentWord}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -87,7 +87,7 @@ export default function titleGroup() {
                       {char}
                     </motion.span>
                   ))}
-                </motion.div>
+                </motion.span>
                 .
               </p>
             </motion.div>
