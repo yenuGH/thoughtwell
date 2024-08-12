@@ -71,9 +71,9 @@ export function MainPage() {
                 </Container>
 
                 <Group justify="center" gap="xl">
-                  <DepositButton></DepositButton>
+                  <DepositButton />
 
-                  <WithdrawButton></WithdrawButton>
+                  <WithdrawButton />
                 </Group>
 
                 <Center style={{ height: "80vh" }}>
