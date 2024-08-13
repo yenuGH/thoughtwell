@@ -36,6 +36,9 @@ export default function Withdraw() {
       console.log("Got replies: ", replies);
 
       setReplies(replies);
+
+      // NOTE: we call open here so that the modal opens once all the replies are loaded
+      open();
     } catch (error) {
       console.error("Error getting replies: ", error);
     }
@@ -49,8 +52,6 @@ export default function Withdraw() {
 
       setThought(thought);
       setThoughtInput(thought.thought);
-
-      open();
     } catch (error) {
       console.error("Error withdrawing thought: ", error);
     }
