@@ -12,7 +12,12 @@ import {
   addDoc,
   getDocs,
 } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 
 import { Thought } from "../interfaces/thoughtInterface";
 
@@ -81,6 +86,23 @@ export const firebaseController = {
     return thoughts[randomIndex];
   },
 
+  async replyThought(thought: Thought, reply: string): Promise<void> {
+    try {
+      const replyRef = doc(collection(firestoreDatabase, "replies"));
+      await setDoc(replyRef, {
+        id: replyRef.id,
+        userId: "placeholder", // all replies will have placeholder id for now
+        thoughtId: thought.id,
+        reply: reply,
+        date: new Date(),
+      });
+
+      console.log("Document written with ID: ", replyRef.id);
+    } catch (error) {
+      console.error("Error replying to thought: ", error);
+    }
+  },
+
   async register(email: string, password: string): Promise<boolean> {
     const auth = getAuth();
     let userCredentials: any;
@@ -101,7 +123,7 @@ export const firebaseController = {
     if (!userCredentials) {
       return false;
     } else {
-        return true;
+      return true;
     }
   },
 
@@ -110,7 +132,7 @@ export const firebaseController = {
     let userCredentials: any;
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
+        // Signed in
         const user = userCredential.user;
         userCredentials = userCredential;
         console.log("User logged in successfully:", user);
@@ -122,11 +144,11 @@ export const firebaseController = {
         console.log("Error during login:", errorCode, errorMessage);
         return false;
       });
-      if (!userCredentials) {
-        return false;
-      } else {
-          return true;
-      }
+    if (!userCredentials) {
+      return false;
+    } else {
+      return true;
+    }
   },
 
   // Method to get the error message
