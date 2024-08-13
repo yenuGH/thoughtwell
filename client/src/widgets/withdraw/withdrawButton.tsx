@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+import { ReplyCard } from "../replyCard/replyCard";
 import { Thought } from "../../interfaces/thoughtInterface";
 import { Reply } from "../../interfaces/replyInterface";
 import { firebaseController } from "../../controllers/firebaseController";
@@ -14,7 +15,7 @@ export default function Withdraw() {
   const [thought, setThought] = useState<Thought>();
   const [thoughtInput, setThoughtInput] = useState("");
 
-  const [reply, setReply] = useState<Reply>();
+  const [replies, setReplies] = useState<Reply[]>();
   const [replyInput, setReplyInput] = useState("");
 
   async function withdrawThought(): Promise<void> {
@@ -22,8 +23,12 @@ export default function Withdraw() {
       console.log("Withdrawing random thought...");
       var thought: Thought = await firebaseController.withdrawThought();
       console.log("Withdrew thought: ", thought);
+
       setThought(thought);
       setThoughtInput(thought.thought);
+
+      await getReplies();
+      
       open();
     } catch (error) {
       console.error("Error withdrawing thought: ", error);
@@ -38,6 +43,17 @@ export default function Withdraw() {
       close();
     } catch (error) {
       console.error("Error replying to thought: ", error);
+    }
+  }
+
+  async function getReplies(): Promise<void> {
+    try {
+      console.log("Getting replies...");
+      var replies: Reply[] = await firebaseController.getReplies(thought!);
+      console.log("Got replies: ", replies);
+      setReplies(replies);
+    } catch (error) {
+      console.error("Error getting replies: ", error);
     }
   }
 
@@ -56,12 +72,15 @@ export default function Withdraw() {
 
         <Textarea
           // label="Thought"
-          placeholder="What's on your mind?"
-          aria-label="Deposit a thought"
+          placeholder="Reply to this thought!"
           onChange={(event) => {
             setReplyInput(event.currentTarget.value);
           }}
         />
+
+        {replies?.map((reply) => (
+          <ReplyCard key={reply.id} reply={reply} />
+        ))}
 
         <Button onClick={replyThought}>Send a reply...</Button>
       </Modal>

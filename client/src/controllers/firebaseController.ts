@@ -20,6 +20,7 @@ import {
 } from "firebase/auth";
 
 import { Thought } from "../interfaces/thoughtInterface";
+import { Reply } from "../interfaces/replyInterface";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -101,6 +102,21 @@ export const firebaseController = {
     } catch (error) {
       console.error("Error replying to thought: ", error);
     }
+  },
+
+  async getReplies(thought: Thought): Promise<Reply[]> {
+    const repliesRef = collection(firestoreDatabase, "replies");
+    const repliesSnapshot = await getDocs(repliesRef);
+    const replies: Reply[] = [];
+
+    repliesSnapshot.forEach((doc) => {
+      const reply = doc.data() as Reply;
+      if (reply.thoughtId === thought.id) {
+        replies.push(reply);
+      }
+    });
+
+    return replies;
   },
 
   async register(email: string, password: string): Promise<boolean> {
