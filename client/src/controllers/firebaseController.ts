@@ -116,6 +116,11 @@ export const firebaseController = {
       }
     });
 
+    // sort the replies by date created
+    replies.sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+
     return replies;
   },
 
