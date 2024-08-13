@@ -18,6 +18,7 @@ export default function Withdraw() {
       var thought: Thought = await firebaseController.withdrawThought();
       console.log("Withdrew thought: ", thought);
       setThought(thought.thought);
+      open();
     } catch (error) {
       console.error("Error withdrawing thought: ", error);
     }
@@ -50,7 +51,6 @@ export default function Withdraw() {
           style={{ color: "white" }}
           onClick={() => {
             withdrawThought();
-            open();
           }}
         >
           Withdraw
