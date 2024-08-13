@@ -1,7 +1,7 @@
 import { Button, Modal, Text, Textarea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import { ReplyCard } from "../replyCard/replyCard";
@@ -14,9 +14,32 @@ export default function Withdraw() {
 
   const [thought, setThought] = useState<Thought>();
   const [thoughtInput, setThoughtInput] = useState("");
+  useEffect(() => {
+    if (thought) {
+      getReplies();
+    }
+  }, [thought]);
 
   const [replies, setReplies] = useState<Reply[]>();
   const [replyInput, setReplyInput] = useState("");
+
+
+  async function getReplies(): Promise<void> {
+    try {
+      console.log("Getting replies...");
+      if (!thought) {
+        console.error("No thought to get replies for.");
+        return;
+      }
+      var replies: Reply[] = await firebaseController.getReplies(thought);
+
+      console.log("Got replies: ", replies);
+
+      setReplies(replies);
+    } catch (error) {
+      console.error("Error getting replies: ", error);
+    }
+  }
 
   async function withdrawThought(): Promise<void> {
     try {
@@ -27,8 +50,6 @@ export default function Withdraw() {
       setThought(thought);
       setThoughtInput(thought.thought);
 
-      await getReplies();
-      
       open();
     } catch (error) {
       console.error("Error withdrawing thought: ", error);
@@ -40,20 +61,10 @@ export default function Withdraw() {
       console.log("Replying to thought...");
       await firebaseController.replyThought(thought!, replyInput);
       console.log("Replied to thought: ", thought);
+
       close();
     } catch (error) {
       console.error("Error replying to thought: ", error);
-    }
-  }
-
-  async function getReplies(): Promise<void> {
-    try {
-      console.log("Getting replies...");
-      var replies: Reply[] = await firebaseController.getReplies(thought!);
-      console.log("Got replies: ", replies);
-      setReplies(replies);
-    } catch (error) {
-      console.error("Error getting replies: ", error);
     }
   }
 
@@ -70,6 +81,10 @@ export default function Withdraw() {
           Close
         </Button> */}
 
+        {replies?.map((reply) => (
+            <ReplyCard key={reply.id} reply={reply} />
+        ))}
+
         <Textarea
           // label="Thought"
           placeholder="Reply to this thought!"
@@ -77,11 +92,6 @@ export default function Withdraw() {
             setReplyInput(event.currentTarget.value);
           }}
         />
-
-        {replies?.map((reply) => (
-          <ReplyCard key={reply.id} reply={reply} />
-        ))}
-
         <Button onClick={replyThought}>Send a reply...</Button>
       </Modal>
 
