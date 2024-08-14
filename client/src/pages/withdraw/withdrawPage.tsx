@@ -1,19 +1,31 @@
-import { Button, Modal, Text, Textarea } from "@mantine/core";
+import {
+  Button,
+  Center,
+  Flex,
+  getGradient,
+  Modal,
+  Stack,
+  Text,
+  Textarea,
+  useMantineTheme,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-import { ReplyCard } from "../replyCard/replyCard";
+import { ReplyCard } from "../../widgets/replyCard/replyCard";
 import { Thought } from "../../interfaces/thoughtInterface";
 import { Reply } from "../../interfaces/replyInterface";
 import { firebaseController } from "../../controllers/firebaseController";
+import AnimatedLayout from "../../routes/AnimatedLayout";
 
-export default function Withdraw() {
+export function WithdrawPage() {
   const [opened, { open, close }] = useDisclosure(false);
 
   const [thought, setThought] = useState<Thought>();
   const [thoughtInput, setThoughtInput] = useState("");
+  const theme = useMantineTheme();
   useEffect(() => {
     if (thought) {
       getReplies();
@@ -22,7 +34,6 @@ export default function Withdraw() {
 
   const [replies, setReplies] = useState<Reply[]>();
   const [replyInput, setReplyInput] = useState("");
-
 
   async function getReplies(): Promise<void> {
     try {
@@ -68,13 +79,23 @@ export default function Withdraw() {
       console.error("Error replying to thought: ", error);
     }
   }
+  const gradient = getGradient(
+    { deg: 180, from: "deep-blue.7", to: "space-cadet-purple.4" },
+    theme
+  );
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Withdraw thought">
-        <Text>{thoughtInput ? thoughtInput : "No thought to withdraw."}</Text>
+      <AnimatedLayout>
+        <div style={{ background: gradient }}>
+          <Flex justify="center" style={{ paddingTop: "50px" }}>
+            <Stack>
+              {/* <Modal opened={opened} onClose={close} title="Withdraw thought"> */}
+              <Text>
+                {thoughtInput ? thoughtInput : "No thought to withdraw."}
+              </Text>
 
-        {/* <Button
+              {/* <Button
           onClick={() => {
             close();
           }}
@@ -82,38 +103,50 @@ export default function Withdraw() {
           Close
         </Button> */}
 
-        {replies?.map((reply) => (
-            <ReplyCard key={reply.id} reply={reply} />
-        ))}
+              {replies?.map((reply) => (
+                <ReplyCard key={reply.id} reply={reply} />
+              ))}
 
-        <Textarea
-          // label="Thought"
-          placeholder="Reply to this thought!"
-          onChange={(event) => {
-            setReplyInput(event.currentTarget.value);
-          }}
-        />
-        <Button onClick={replyThought}>Send a reply...</Button>
-      </Modal>
+              <Textarea
+                // label="Thought"
+                placeholder="Reply to this thought!"
+                onChange={(event) => {
+                  setReplyInput(event.currentTarget.value);
+                }}
+              />
+              <Button onClick={replyThought}>Send a reply...</Button>
+              {/* </Modal> */}
 
-      <motion.div
+              {/* <motion.div
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
         transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      >
-        <Button
-          size="xl"
-          color="red.6"
-          radius="xl"
-          variant="filled"
-          style={{ color: "white" }}
-          onClick={() => {
-            withdrawThought();
-          }}
-        >
-          Withdraw
-        </Button>
-      </motion.div>
+      > */}
+              <Button
+                size="xl"
+                color="red.6"
+                radius="xl"
+                variant="filled"
+                style={{ color: "white" }}
+                onClick={() => {
+                  withdrawThought();
+                }}
+              >
+                Withdraw
+              </Button>
+              {/* </motion.div> */}
+            </Stack>
+          </Flex>
+          <Center style={{ height: "80vh" }}>
+            {/* <Image
+                src="../src/assets/birdseyewell.png"
+                height={900}
+                // margin-left="50px"
+                // width={250}
+              /> */}
+          </Center>
+        </div>
+      </AnimatedLayout>
     </>
   );
 }
