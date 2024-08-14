@@ -117,7 +117,6 @@ export function DepositPage() {
                   color="deep-blue.9"
                   size="md"
                   style={{ width: "20%" }}
-                  loading={loading}
                   onClick={() => {
                     navigate("/main");
                   }}

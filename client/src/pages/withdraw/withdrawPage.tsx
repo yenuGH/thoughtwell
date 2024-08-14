@@ -19,9 +19,11 @@ import { Thought } from "../../interfaces/thoughtInterface";
 import { Reply } from "../../interfaces/replyInterface";
 import { firebaseController } from "../../controllers/firebaseController";
 import AnimatedLayout from "../../routes/AnimatedLayout";
+import { useNavigate } from "react-router-dom";
+import ThoughtsListPage from "./thoughtsListPage";
 
 export function WithdrawPage() {
-  const [opened, { open, close }] = useDisclosure(false);
+  const navigate = useNavigate();
 
   const [thought, setThought] = useState<Thought>();
   const [thoughtInput, setThoughtInput] = useState("");
@@ -67,7 +69,7 @@ export function WithdrawPage() {
       console.error("Error withdrawing thought: ", error);
     }
   }
-
+  
   async function replyThought(): Promise<void> {
     try {
       console.log("Replying to thought...");
@@ -88,40 +90,25 @@ export function WithdrawPage() {
     <>
       <AnimatedLayout>
         <div style={{ background: gradient }}>
-          <Flex justify="center" style={{ paddingTop: "50px" }}>
-            <Stack>
-              {/* <Modal opened={opened} onClose={close} title="Withdraw thought"> */}
+        <ThoughtsListPage />
+          {/* <Flex justify="center" style={{ paddingTop: "50px" }}> */}
+            
+            {/* <Stack>
               <Text>
                 {thoughtInput ? thoughtInput : "No thought to withdraw."}
               </Text>
-
-              {/* <Button
-          onClick={() => {
-            close();
-          }}
-        >
-          Close
-        </Button> */}
 
               {replies?.map((reply) => (
                 <ReplyCard key={reply.id} reply={reply} />
               ))}
 
               <Textarea
-                // label="Thought"
                 placeholder="Reply to this thought!"
                 onChange={(event) => {
                   setReplyInput(event.currentTarget.value);
                 }}
               />
               <Button onClick={replyThought}>Send a reply...</Button>
-              {/* </Modal> */}
-
-              {/* <motion.div
-        whileHover={{ scale: 1.2 }}
-        whileTap={{ scale: 0.9 }}
-        transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      > */}
               <Button
                 size="xl"
                 color="red.6"
@@ -134,16 +121,9 @@ export function WithdrawPage() {
               >
                 Withdraw
               </Button>
-              {/* </motion.div> */}
-            </Stack>
-          </Flex>
+            </Stack> */}
+          {/* </Flex> */}
           <Center style={{ height: "80vh" }}>
-            {/* <Image
-                src="../src/assets/birdseyewell.png"
-                height={900}
-                // margin-left="50px"
-                // width={250}
-              /> */}
           </Center>
         </div>
       </AnimatedLayout>

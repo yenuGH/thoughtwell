@@ -87,6 +87,43 @@ export const firebaseController = {
     return thoughts[randomIndex];
   },
 
+  // used to get thoughts for listing
+  async getThoughts(): Promise<Thought[]> {
+    const thoughtsRef = collection(firestoreDatabase, "thoughts");
+    const thoughtsSnapshot = await getDocs(thoughtsRef);
+    const thoughts: Thought[] = [];
+
+    thoughtsSnapshot.forEach((doc) => {
+      thoughts.push(doc.data() as Thought);
+    });
+
+    // sort the thoughts by date created
+    thoughts.sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+
+    return thoughts;
+  },
+
+  async getThoughtById(thoughtId: string): Promise<Thought> {
+    const thoughtsRef = collection(firestoreDatabase, "thoughts");
+    const thoughtsSnapshot = await getDocs(thoughtsRef);
+    let thought: Thought | null = null;
+
+    thoughtsSnapshot.forEach((doc) => {
+      const thoughtData = doc.data() as Thought;
+      if (thoughtData.id === thoughtId) {
+        thought = thoughtData;
+      }
+    });
+
+    if (!thought) {
+      throw new Error("Thought not found.");
+    }
+
+    return thought;
+  },
+
   async replyThought(thought: Thought, reply: string): Promise<void> {
     try {
       const replyRef = doc(collection(firestoreDatabase, "replies"));
