@@ -11,6 +11,8 @@ import {
   setDoc,
   addDoc,
   getDocs,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -142,7 +144,7 @@ export const firebaseController = {
   },
 
   async getReplies(thought: Thought): Promise<Reply[]> {
-    const repliesRef = collection(firestoreDatabase, "replies");
+    const repliesRef = query(collection(firestoreDatabase, "replies"), orderBy("date", "desc"));
     const repliesSnapshot = await getDocs(repliesRef);
     const replies: Reply[] = [];
 

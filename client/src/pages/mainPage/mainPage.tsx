@@ -62,7 +62,7 @@ export function MainPage() {
               <Flex
                 justify="flex-end"
                 style={{
-                  paddingTop: "0px",
+                  paddingTop: "10px",
                   paddingRight: "20px",
                   textAlign: "right",
                 }}
@@ -92,10 +92,10 @@ export function MainPage() {
                     >
                       <Button
                         size="xl"
-                        color="teal.6"
+                        // color="teal.6"
                         radius="xl"
                         variant="filled"
-                        style={{ color: "white" }}
+                        style={{ color: "white", background: "linear-gradient(45deg, #1de9b6, #1dc4e9)",}}
                         onClick={() => handleInterfaceClick("deposit")}
                       >
                         Deposit
@@ -112,10 +112,11 @@ export function MainPage() {
                     >
                       <Button
                         size="xl"
-                        color="red.6"
+                        // color="red.6"
                         radius="xl"
                         variant="filled"
-                        style={{ color: "white" }}
+                        style={{ color: "white",
+                          background: "linear-gradient(45deg, #ff6f61, #ff3d00)" }}
                         onClick={() => {
                           handleInterfaceClick("withdraw");
                         }}
@@ -123,36 +124,6 @@ export function MainPage() {
                         Withdraw
                       </Button>
                     </motion.div>
-
-                    {/* <Box
-                      style={{
-                        backgroundColor: "#1c7ed6", // Replace with your theme color if needed
-                        color: "white",
-                        padding: "10px 15px",
-                        borderRadius: "20px",
-                        maxWidth: "75%",
-                        margin: "10px 0",
-                        wordWrap: "break-word",
-                        position: "relative",
-                      }}
-                    >
-                      <Text>
-                        ASdjaklfjkldjfkl jldkfj klasdjflkj aldkfj
-                        klasdfjklasjdflkdsjflkj
-                      </Text>
-                      <div
-                        style={{
-                          content: '""',
-                          position: "absolute",
-                          bottom: "-16px",
-                          right: "8px",
-                          borderWidth: "10px",
-                          borderStyle: "solid",
-                          borderColor:
-                            "#1c7ed6 transparent transparent transparent", // Replace with your theme color if needed
-                        }}
-                      />
-                    </Box> */}
 
                   </Group>
                 </>

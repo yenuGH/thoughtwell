@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <WithdrawPage />,
       },
       {
-        path: "/thought/:thoughtId",
+        path: "/withdraw/:thoughtId",
         element: <ThoughtDetailsPage />,
       }
     ],

@@ -69,6 +69,7 @@ export function DepositPage() {
         <div style={{ background: gradient }}>
           <Flex justify="center">
             <Stack>
+              
               <p
                 className="text"
                 style={{
@@ -80,6 +81,7 @@ export function DepositPage() {
               >
                 This is where the daily thought prompt would be!
               </p>
+
               <Textarea
                 // label="Thought"
                 placeholder="What's on your mind?"

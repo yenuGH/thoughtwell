@@ -8,9 +8,9 @@ import {
   useMantineTheme,
   getGradient,
 } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import AnimatedLayout from "../../routes/AnimatedLayout";
+import AnimatedLayout from "../../routes/AnimatedLayout.tsx";
 import { AnimatePresence, motion } from "framer-motion";
 
 import "@fontsource/bungee";
@@ -23,7 +23,6 @@ import styles from "./landingPage.module.css";
 import { Stars, Cloud } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useNavigate } from "react-router-dom";
-import { firebaseController } from "../../controllers/firebaseController.ts";
 
 export function LandingPage() {
   const theme = useMantineTheme();
