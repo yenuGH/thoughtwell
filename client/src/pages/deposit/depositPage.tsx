@@ -69,7 +69,6 @@ export function DepositPage() {
         <div style={{ background: gradient }}>
           <Flex justify="center">
             <Stack>
-              
               <p
                 className="text"
                 style={{
@@ -81,52 +80,61 @@ export function DepositPage() {
               >
                 This is where the daily thought prompt would be!
               </p>
-
-              <Textarea
-                // label="Thought"
-                placeholder="What's on your mind?"
-                aria-label="Deposit a thought"
-                classNames={{ input: styles.customTextArea }}
-                style={{ width: "100%", padding: "10px" }}
-                size="lg"
-                color="blue"
-                radius="xl"
-                autosize
-                minRows={5}
-                onChange={(event) => {
-                  // Update thought
-                  setThought(event.currentTarget.value);
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: 1.0 } }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
                 }}
-              />
-              <Flex>
-                <Button
+              >
+                <Textarea
+                  // label="Thought"
+                  placeholder="What's on your mind?"
+                  aria-label="Deposit a thought"
+                  classNames={{ input: styles.customTextArea }}
+                  style={{ width: "100%", padding: "10px" }}
+                  size="lg"
+                  color="blue"
                   radius="xl"
-                  color="pale-blue.5"
-                  size="md"
-                  style={{ width: "20%", marginRight: "10px" }}
-                  loading={loading}
-                  onClick={() => {
-                    // Deposit thought
-                    console.log(thought);
-                    // deposit the thought into local storage here
-                    depositThought();
+                  autosize
+                  minRows={5}
+                  onChange={(event) => {
+                    // Update thought
+                    setThought(event.currentTarget.value);
                   }}
-                >
-                  Deposit
-                </Button>
-                <Button
-                  radius="xl"
-                  color="deep-blue.9"
-                  size="md"
-                  style={{ width: "20%" }}
-                  onClick={() => {
-                    navigate("/main");
-                  }}
-                >
-                  Back
-                </Button>
-              </Flex>
-
+                />
+                <Flex>
+                  <Button
+                    radius="xl"
+                    color="pale-blue.5"
+                    size="md"
+                    style={{ width: "20%", marginRight: "10px" }}
+                    loading={loading}
+                    onClick={() => {
+                      // Deposit thought
+                      console.log(thought);
+                      // deposit the thought into local storage here
+                      depositThought();
+                    }}
+                  >
+                    Deposit
+                  </Button>
+                  <Button
+                    radius="xl"
+                    color="deep-blue.9"
+                    size="md"
+                    style={{ width: "20%" }}
+                    onClick={() => {
+                      navigate("/main");
+                    }}
+                  >
+                    Back
+                  </Button>
+                </Flex>
+              </motion.div>
               {message && ( // Conditionally render the message
                 <p
                   style={{

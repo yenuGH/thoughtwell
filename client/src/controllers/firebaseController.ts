@@ -58,11 +58,25 @@ export const firebaseController = {
     try {
       console.log("Depositing thought: ", thought);
 
-      // generate the ID for the thought first
+      // Get the currently signed-in user
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        const thoughtRef = doc(collection(firestoreDatabase, "thoughts"));
+        await setDoc(thoughtRef, {
+          id: thoughtRef.id,
+          userId: "Guest",
+          thought: thought,
+          date: new Date(),
+        });
+      }
+
+      // Generate the ID for the thought first
       const thoughtRef = doc(collection(firestoreDatabase, "thoughts"));
       await setDoc(thoughtRef, {
         id: thoughtRef.id,
-        userId: "placeholder", // all thoughts will have placeholder id for now
+        userId: user!.uid, // Use the signed-in user's ID
         thought: thought,
         date: new Date(),
       });
@@ -128,10 +142,23 @@ export const firebaseController = {
 
   async replyThought(thought: Thought, reply: string): Promise<void> {
     try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        const replyRef = doc(collection(firestoreDatabase, "replies"));
+        await setDoc(replyRef, {
+          id: replyRef.id,
+          userId: "Guest",
+          thoughtId: thought.id,
+          reply: reply,
+          date: new Date(),
+        });
+      }
       const replyRef = doc(collection(firestoreDatabase, "replies"));
       await setDoc(replyRef, {
         id: replyRef.id,
-        userId: "placeholder", // all replies will have placeholder id for now
+        userId: user!.uid,
         thoughtId: thought.id,
         reply: reply,
         date: new Date(),
@@ -144,7 +171,10 @@ export const firebaseController = {
   },
 
   async getReplies(thought: Thought): Promise<Reply[]> {
-    const repliesRef = query(collection(firestoreDatabase, "replies"), orderBy("date", "desc"));
+    const repliesRef = query(
+      collection(firestoreDatabase, "replies"),
+      orderBy("date", "desc")
+    );
     const repliesSnapshot = await getDocs(repliesRef);
     const replies: Reply[] = [];
 
