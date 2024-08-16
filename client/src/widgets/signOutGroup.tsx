@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { firebaseController } from "../controllers/firebaseController";
 import { AnimatePresence, motion } from "framer-motion";
+import { sessionController } from "../controllers/sessionController";
 
 export default function SignOutGroup() {
   const [currentUser, updateCurrentUser] = useState<User | null>(null);
@@ -28,6 +29,9 @@ export default function SignOutGroup() {
       .then(() => {
         // Sign-out successful.
         navigate("/"); // Navigate after successful sign-out
+
+        // Clear the session token
+        sessionController.clearSession();
       })
       .catch((error) => {
         // An error happened.
