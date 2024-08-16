@@ -35,12 +35,13 @@ export function ReplyCard({ reply }: ReplyCardProps): JSX.Element {
         >
           <Card
             shadow="0"
-            padding="md"
+            padding="8px"
             radius="md"
             mt="0"
             mb="0"
             style={{ backgroundColor: gradient }}
           >
+            {/* <Card.Section> */}
             <Box
               style={{
                 backgroundColor: "#1c7ed6", // Replace with your theme color if needed
@@ -54,18 +55,20 @@ export function ReplyCard({ reply }: ReplyCardProps): JSX.Element {
               }}
             >
               <Text>{reply.reply}</Text>
+              
               <div
                 style={{
                   content: '""',
                   position: "absolute",
                   bottom: "0px",
-                  right: "-20px",
+                  left: "136px",
                   borderWidth: "15px",
                   borderStyle: "solid",
                   borderColor: "transparent transparent transparent #1c7ed6", // Adjust the border color to point the tail to the right
                 }}
               />
             </Box>
+            {/* </Card.Section> */}
           </Card>
         </motion.div>
       </AnimatePresence>
