@@ -1,0 +1,19 @@
+/* ThoughtsListPage.css */
+.pagination-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pagination-button {
+  background-color: #007bff; /* Change this to your desired color */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-button:hover {
+  background-color: #0056b3; /* Change this to your desired hover color */
+}
