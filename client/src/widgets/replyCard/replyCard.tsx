@@ -35,7 +35,7 @@ export function ReplyCard({ reply }: ReplyCardProps): JSX.Element {
         >
           <Card
             shadow="0"
-            padding="8px"
+            padding="sm"
             radius="md"
             mt="0"
             mb="0"
@@ -61,7 +61,7 @@ export function ReplyCard({ reply }: ReplyCardProps): JSX.Element {
                   content: '""',
                   position: "absolute",
                   bottom: "0px",
-                  left: "136px",
+                  right: "-20px",
                   borderWidth: "15px",
                   borderStyle: "solid",
                   borderColor: "transparent transparent transparent #1c7ed6", // Adjust the border color to point the tail to the right
