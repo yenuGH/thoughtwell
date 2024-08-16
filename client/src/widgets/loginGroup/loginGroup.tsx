@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { firebaseController } from "../../controllers/firebaseController";
 import { useNavigate } from "react-router-dom";
+import { sessionController } from "../../controllers/sessionController";
 
 export default function registerGroup() {
   const [email, setEmail] = useState("");
@@ -36,6 +37,10 @@ export default function registerGroup() {
     if (isSuccessful) {
       console.log("Firebase authenticated login successfully.");
       setShowSuccess(true);
+
+      // set the session token
+      await sessionController.saveSession();
+
       setTimeout(() => {
         navigate("/main");
       }, 1500); // Show success effect for 1.5 seconds before navigating
@@ -46,11 +51,11 @@ export default function registerGroup() {
     }
   }
 
-  const handleEnterKey = (event: { key: string; }) => {
-    if (event.key === 'Enter') {
+  const handleEnterKey = (event: { key: string }) => {
+    if (event.key === "Enter") {
       handleLoginButton();
     }
-  }
+  };
 
   return (
     <>
@@ -119,7 +124,7 @@ export default function registerGroup() {
                 </Center>
               </Stack>
             </Group>
-            {errorMessage && !isLoading && !showSuccess &&(
+            {errorMessage && !isLoading && !showSuccess && (
               <Center>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.5 }}
