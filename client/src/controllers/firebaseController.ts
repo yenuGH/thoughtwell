@@ -105,7 +105,10 @@ export const firebaseController = {
 
   // used to get thoughts for listing
   async getThoughts(): Promise<Thought[]> {
-    const thoughtsRef = collection(firestoreDatabase, "thoughts");
+    const thoughtsRef = query(
+      collection(firestoreDatabase, "thoughts"),
+      orderBy("date", "desc")
+    );
     const thoughtsSnapshot = await getDocs(thoughtsRef);
     const thoughts: Thought[] = [];
 
@@ -114,9 +117,9 @@ export const firebaseController = {
     });
 
     // sort the thoughts by date created
-    thoughts.sort((a, b) => {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    });
+    // thoughts.sort((a, b) => {
+    //   return new Date(b.date).getTime() - new Date(a.date).getTime();
+    // });
 
     return thoughts;
   },
@@ -186,9 +189,9 @@ export const firebaseController = {
     });
 
     // sort the replies by date created
-    replies.sort((a, b) => {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    });
+    // replies.sort((a, b) => {
+    //   return new Date(b.date).getTime() - new Date(a.date).getTime();
+    // });
 
     return replies;
   },
