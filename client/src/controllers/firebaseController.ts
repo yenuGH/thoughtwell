@@ -13,6 +13,8 @@ import {
   getDocs,
   query,
   orderBy,
+  getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -69,6 +71,7 @@ export const firebaseController = {
           userId: "Guest",
           thought: thought,
           date: new Date(),
+          karma: 0,
         });
       }
 
@@ -79,6 +82,7 @@ export const firebaseController = {
         userId: user!.uid, // Use the signed-in user's ID
         thought: thought,
         date: new Date(),
+        karma: 0,
       });
 
       console.log("Document written with ID: ", thoughtRef.id);
@@ -141,6 +145,82 @@ export const firebaseController = {
     }
 
     return thought;
+  },
+
+  async getUserVote(thoughtId: string): Promise<string> {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    console.log("user: " + user);
+
+    if (!user) {
+      console.error("No user signed in. Must be signed in to vote.");
+      return "";
+    }
+
+    const db = getFirestore();
+    const voteRef = doc(collection(db, "votes"), `${user.uid}_${thoughtId}`);
+    console.log("voteRef: " + voteRef);
+    const voteDoc = await getDoc(voteRef);
+    if (voteDoc.exists()) {
+      return voteDoc.data().voteType;
+    } else {
+      return "";
+    }
+  },
+
+  async voteThought(thought: Thought, voteType: string): Promise<void> {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.error("No user signed in. Must be signed in to vote.");
+      return;
+    }
+
+    const db = getFirestore();
+    const thoughtRef = doc(db, "thoughts", thought.id);
+    const voteRef = doc(collection(db, "votes"), `${user.uid}_${thought.id}`); // check if user has voted on this thought
+
+    try {
+      const voteDoc = await getDoc(voteRef);
+      if (voteDoc.exists()) {
+        const existingVote = voteDoc.data().voteType;
+        if (existingVote === voteType) {
+          // User is voting for the same vote type again, undo the vote
+          if (voteType === "upvote") {
+            await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
+          } else if (voteType === "downvote") {
+            await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
+          }
+          // Remove the vote document
+          await deleteDoc(voteRef);
+          return;
+        } else {
+          // Reverse the previous vote
+          if (existingVote === "upvote") {
+            await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
+          } else if (existingVote === "downvote") {
+            await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
+          }
+        }
+      }
+      // Apply the new vote
+      if (voteType === "upvote") {
+        await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
+      } else if (voteType === "downvote") {
+        await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
+      }
+
+      // Save the new vote
+      await setDoc(voteRef, {
+        userId: user.uid,
+        thoughtId: thought.id,
+        voteType: voteType,
+      });
+    } catch (error) {
+      console.log("Error processing vote: ", error);
+      return;
+    }
   },
 
   async replyThought(thought: Thought, reply: string): Promise<void> {

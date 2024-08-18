@@ -20,7 +20,7 @@ const ThoughtsListPage = () => {
   const [thoughts, setThoughts] = useState<Thought[]>();
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-  const thoughtsPerPage = 10;
+  const thoughtsPerPage = 5;
   const theme = useMantineTheme();
 
   useEffect(() => {

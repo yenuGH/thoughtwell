@@ -4,4 +4,5 @@ export interface Reply {
     thoughtId: string,
     reply: string,
     date: Date,
+    karma: number
 }
