@@ -36,18 +36,21 @@ export function ThoughtDetailsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [voteType, setVoteType] = useState<string | null>(null); // 'up' or 'down'
 
-  const handleVote = async (voteType: string) => {
+  const handleVote = async (newVoteType: string) => {
     if (!thought) return;
-    console.log("voting");
     // Optimistically update the state for immediate user feedback
-    setVoteType(voteType);
-    const updatedKarma =
-      voteType === "upvote" ? thought.karma + 1 : thought.karma - 1;
-    setThought({ ...thought, karma: updatedKarma });
-
-    console.log("voteType: ", voteType);
+    if (voteType === newVoteType) {
+      setVoteType(null);
+      newVoteType = "";
+    } else {
+      setVoteType(newVoteType);
+    }
+    // setVoteType(newVoteType);
+    // const updatedKarma =
+    //   voteType === "upvote" ? thought.karma + 1 : thought.karma - 1;
+    // setThought({ ...thought, karma: updatedKarma });
     // Process the vote
-    await firebaseController.voteThought(thought!, voteType!);
+    await firebaseController.voteThought(thought!, newVoteType!);
 
     // Fetch the updated thought from Firebase
     const updatedThought = await firebaseController.getThoughtById(thoughtId!);
@@ -66,8 +69,6 @@ export function ThoughtDetailsPage() {
         return;
       }
       var replies: Reply[] = await firebaseController.getReplies(thought);
-
-      console.log("Got replies: ", replies);
 
       setReplies(replies);
     } catch (error) {

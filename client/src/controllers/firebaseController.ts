@@ -150,7 +150,6 @@ export const firebaseController = {
   async getUserVote(thoughtId: string): Promise<string> {
     const auth = getAuth();
     const user = auth.currentUser;
-    console.log("user: " + user);
 
     if (!user) {
       console.error("No user signed in. Must be signed in to vote.");
@@ -159,7 +158,6 @@ export const firebaseController = {
 
     const db = getFirestore();
     const voteRef = doc(collection(db, "votes"), `${user.uid}_${thoughtId}`);
-    console.log("voteRef: " + voteRef);
     const voteDoc = await getDoc(voteRef);
     if (voteDoc.exists()) {
       return voteDoc.data().voteType;
