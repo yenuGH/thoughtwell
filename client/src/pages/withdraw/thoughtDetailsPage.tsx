@@ -37,18 +37,24 @@ export function ThoughtDetailsPage() {
   const [voteType, setVoteType] = useState<string | null>(null); // 'up' or 'down'
 
   const handleVote = async (newVoteType: string) => {
-    if (!thought) return;
-    // Optimistically update the state for immediate user feedback
+    if (!thought) {
+      setVoteType(null);
+      newVoteType = "";
+      return;
+    }
+    
     if (voteType === newVoteType) {
       setVoteType(null);
       newVoteType = "";
     } else {
       setVoteType(newVoteType);
     }
+    // Optimistically update the state for immediate user feedback
     // setVoteType(newVoteType);
     // const updatedKarma =
     //   voteType === "upvote" ? thought.karma + 1 : thought.karma - 1;
     // setThought({ ...thought, karma: updatedKarma });
+
     // Process the vote
     await firebaseController.voteThought(thought!, newVoteType!);
 

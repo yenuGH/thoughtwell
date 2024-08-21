@@ -181,20 +181,23 @@ export const firebaseController = {
 
     try {
       const voteDoc = await getDoc(voteRef);
+      // If the user has voted on this thought before
       if (voteDoc.exists()) {
         const existingVote = voteDoc.data().voteType;
         if (existingVote === voteType) {
           // User is voting for the same vote type again, undo the vote
           if (voteType === "upvote") {
             await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
+            await deleteDoc(voteRef);
           } else if (voteType === "downvote") {
             await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
+            await deleteDoc(voteRef);
           }
-          // Remove the vote document
+          // Remove the vote document (apparently deleting is better than updating for our read limits)
           await deleteDoc(voteRef);
           return;
         } else {
-          // Reverse the previous vote
+          // User is voting for the opposite vote type, undo the previous vote
           if (existingVote === "upvote") {
             await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
           } else if (existingVote === "downvote") {
@@ -202,7 +205,7 @@ export const firebaseController = {
           }
         }
       }
-      // Apply the new vote
+      // User is voting for the first time
       if (voteType === "upvote") {
         await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
       } else if (voteType === "downvote") {
