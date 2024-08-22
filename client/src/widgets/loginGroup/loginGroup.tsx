@@ -167,7 +167,7 @@ export default function registerGroup() {
                     wordWrap: "break-word", // Ensure long words are wrapped
                   }}
                 >
-                  <p style={{ color: "red", margin: 0, padding: 0 }}>
+                  <p style={{ textAlign: "center", color: "red", margin: 0, padding: 0 }}>
                     {errorMessage}
                   </p>
                 </motion.div>
