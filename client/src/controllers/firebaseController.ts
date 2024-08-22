@@ -291,7 +291,26 @@ export const firebaseController = {
       })
       .catch((error) => {
         console.log("Error during registration:", error.code, error.message);
-        errorMessage = error.message;
+        
+        switch (error.code) {
+            case "auth/weak-password": {
+                errorMessage = "Password is too weak.\nA password must contain at least 6 characters, one uppercase letter, one number, and one special character.";
+                break;
+            }
+            case "auth/invalid-email": {
+                errorMessage = "Invalid email address. Please try again.";
+                break;
+            }
+            case "auth/email-already-in-use": {
+                errorMessage = "Email already in use. Please try another email.";
+                break;
+            }
+            default: {
+                errorMessage = error.message;
+                break;
+            }
+        }
+
         return false;
       });
 
