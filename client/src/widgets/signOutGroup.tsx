@@ -49,7 +49,7 @@ export default function SignOutGroup() {
         >
           {currentUser ? (
             <>
-              <p>Welcome, {currentUser.email}</p>
+              <p style={{color: "white"}}>Welcome, {currentUser.email}</p>
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -68,7 +68,7 @@ export default function SignOutGroup() {
             </>
           ) : (
             <>
-              <p>Welcome, Guest</p>
+              <p style={{color: "white"}}>Welcome, Guest</p>
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}

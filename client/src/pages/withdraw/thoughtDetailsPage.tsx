@@ -11,6 +11,7 @@ import {
   Center,
   Box,
   Pagination,
+  ActionIcon,
 } from "@mantine/core";
 import { firebaseController } from "../../controllers/firebaseController";
 import { Thought } from "../../interfaces/thoughtInterface";
@@ -20,6 +21,8 @@ import { ReplyCard } from "../../widgets/replyCard/replyCard";
 import SignOutGroup from "../../widgets/signOutGroup";
 import styles from "./thoughtDetailsPage.module.css";
 import { AnimatePresence, motion } from "framer-motion";
+import { IconArrowBigDown, IconArrowBigUp } from "@tabler/icons-react";
+import { getAuth } from "firebase/auth";
 
 export function ThoughtDetailsPage() {
   const { thoughtId } = useParams<{ thoughtId: string }>();
@@ -31,13 +34,38 @@ export function ThoughtDetailsPage() {
   const navigate = useNavigate();
   const repliesPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
+  const [voteType, setVoteType] = useState<string | null>(null); // 'up' or 'down'
+
+  const handleVote = async (newVoteType: string) => {
+    if (!thought) {
+      setVoteType(null);
+      newVoteType = "";
+      return;
+    }
+    
+    if (voteType === newVoteType) {
+      setVoteType(null);
+      newVoteType = "";
+    } else {
+      setVoteType(newVoteType);
+    }
+    // Optimistically update the state for immediate user feedback
+    // setVoteType(newVoteType);
+    // const updatedKarma =
+    //   voteType === "upvote" ? thought.karma + 1 : thought.karma - 1;
+    // setThought({ ...thought, karma: updatedKarma });
+
+    // Process the vote
+    await firebaseController.voteThought(thought!, newVoteType!);
+
+    // Fetch the updated thought from Firebase
+    const updatedThought = await firebaseController.getThoughtById(thoughtId!);
+    setThought(updatedThought);
+  };
 
   const indexOfLastReply = currentPage * repliesPerPage;
   const indexOfFirstReply = indexOfLastReply - repliesPerPage;
-  const currentReplies = replies?.slice(
-    indexOfFirstReply,
-    indexOfLastReply
-  );
+  const currentReplies = replies?.slice(indexOfFirstReply, indexOfLastReply);
 
   async function getReplies(thought: Thought): Promise<void> {
     try {
@@ -47,8 +75,6 @@ export function ThoughtDetailsPage() {
         return;
       }
       var replies: Reply[] = await firebaseController.getReplies(thought);
-
-      console.log("Got replies: ", replies);
 
       setReplies(replies);
     } catch (error) {
@@ -62,8 +88,13 @@ export function ThoughtDetailsPage() {
         const fetchedThought = await firebaseController.getThoughtById(
           thoughtId
         );
+        // await firebaseController.getVotes(fetchedThought, user.uid); // Check if user has voted on this thought
         await getReplies(fetchedThought);
         setThought(fetchedThought);
+
+        const getUserVote = await firebaseController.getUserVote(fetchedThought.id);
+        setVoteType(getUserVote);
+        // console.log("voteType: " + voteType);
       } else {
         console.error("No thoughtId provided");
       }
@@ -85,7 +116,7 @@ export function ThoughtDetailsPage() {
       setLoading(false);
     }
   }
-  
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
@@ -150,6 +181,7 @@ export function ThoughtDetailsPage() {
                     <Text c="white">
                       {thought ? thought.thought : "Loading thoughts..."}
                     </Text>
+                    {/* <p>{thought ? thought.karma : "test for karma"}</p> */}
                     <div
                       style={{
                         content: '""',
@@ -162,6 +194,45 @@ export function ThoughtDetailsPage() {
                           "transparent #1c7ed6 transparent transparent", // Adjust the border color to point the tail to the right
                       }}
                     />
+                    <div
+                      style={{
+                        display: "flex", // Use flex display to align items horizontally
+                        flexDirection: "column",
+                        alignItems: "center", // Align items vertically centered
+                        position: "absolute",
+                        left: "-40px",
+                        top: "0px",
+                      }}
+                    >
+                      <ActionIcon
+                        variant="transparent"
+                        size="sm"
+                        aria-label="Upvote action icon"
+                        color={voteType === "upvote" ? "blue" : "white"}
+                        onClick={() => handleVote("upvote")}
+                        // style={{ marginBottom: "0px", padding:"0px"}}
+                      >
+                        <IconArrowBigUp />
+                      </ActionIcon>
+                      <Text
+                        c="white"
+                        style={{
+                          paddingTop: "2px",
+                          paddingBottom: "0px",
+                        }}
+                      >
+                        {thought?.karma}
+                      </Text>
+                      <ActionIcon
+                        variant="transparent"
+                        size="sm"
+                        aria-label="Downvote action icon"
+                        color={voteType === "downvote" ? "blue" : "white"}
+                        onClick={() => handleVote("downvote")}
+                      >
+                        <IconArrowBigDown />
+                      </ActionIcon>
+                    </div>
                   </Box>
                 </motion.div>
                 <Textarea

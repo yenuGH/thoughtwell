@@ -13,6 +13,8 @@ import {
   getDocs,
   query,
   orderBy,
+  getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -69,6 +71,7 @@ export const firebaseController = {
           userId: "Guest",
           thought: thought,
           date: new Date(),
+          karma: 0,
         });
       }
 
@@ -79,6 +82,7 @@ export const firebaseController = {
         userId: user!.uid, // Use the signed-in user's ID
         thought: thought,
         date: new Date(),
+        karma: 0,
       });
 
       console.log("Document written with ID: ", thoughtRef.id);
@@ -141,6 +145,84 @@ export const firebaseController = {
     }
 
     return thought;
+  },
+
+  async getUserVote(thoughtId: string): Promise<string> {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.error("No user signed in. Must be signed in to vote.");
+      return "";
+    }
+
+    const db = getFirestore();
+    const voteRef = doc(collection(db, "votes"), `${user.uid}_${thoughtId}`);
+    const voteDoc = await getDoc(voteRef);
+    if (voteDoc.exists()) {
+      return voteDoc.data().voteType;
+    } else {
+      return "";
+    }
+  },
+
+  async voteThought(thought: Thought, newVoteType: string): Promise<void> {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.error("No user signed in. Must be signed in to vote.");
+      return;
+    }
+
+    const db = getFirestore();
+    const thoughtRef = doc(db, "thoughts", thought.id);
+    const voteRef = doc(collection(db, "votes"), `${user.uid}_${thought.id}`); // check if user has voted on this thought
+
+    try {
+      const voteDoc = await getDoc(voteRef);
+      // If the user has voted on this thought before
+      if (voteDoc.exists()) {
+        const existingVote = voteDoc.data().voteType;
+        if (newVoteType == "" && existingVote != "") {
+          // User is voting for the same vote type again, undo the vote
+          console.log("null case");
+          if (existingVote === "upvote") {
+            await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
+          } else if (existingVote === "downvote") {
+            await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
+          }
+        } else if (newVoteType !== "" && existingVote != "") {
+          // User is voting for the opposite vote type, undo the previous vote
+          console.log("undoing case");
+          console.log("existingVote: ", existingVote);
+          console.log("newVoteType: ", newVoteType);
+          if (existingVote === "upvote") {
+            console.log("test");
+            await setDoc(thoughtRef, { karma: thought.karma - 2 }, { merge: true });
+          } else if (existingVote === "downvote") {
+            await setDoc(thoughtRef, { karma: thought.karma + 2 }, { merge: true });
+          }
+        }
+       else {
+        // User is voting for the first time
+        if (newVoteType === "upvote") {
+          await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
+        } else if (newVoteType === "downvote") {
+          await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
+        }
+      }
+    }
+      // Save the new vote
+      await setDoc(voteRef, {
+        userId: user.uid,
+        thoughtId: thought.id,
+        voteType: newVoteType,
+      });
+    } catch (error) {
+      console.log("Error processing vote: ", error);
+      return;
+    }
   },
 
   async replyThought(thought: Thought, reply: string): Promise<void> {
@@ -209,7 +291,26 @@ export const firebaseController = {
       })
       .catch((error) => {
         console.log("Error during registration:", error.code, error.message);
-        errorMessage = error.message;
+        
+        switch (error.code) {
+            case "auth/weak-password": {
+                errorMessage = "Password is too weak.\nA password must contain at least 6 characters, one uppercase letter, one number, and one special character.";
+                break;
+            }
+            case "auth/invalid-email": {
+                errorMessage = "Invalid email address. Please try again.";
+                break;
+            }
+            case "auth/email-already-in-use": {
+                errorMessage = "Email already in use. Please try another email.";
+                break;
+            }
+            default: {
+                errorMessage = error.message;
+                break;
+            }
+        }
+
         return false;
       });
 

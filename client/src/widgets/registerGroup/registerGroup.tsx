@@ -29,16 +29,64 @@ export default function registerGroup() {
     return password === confirmPassword;
   }
 
-  async function handleRegisterButton(): Promise<void> {
-    if (email === "" || password === "" || confirmPassword === "") {
-      setErrorMessage("Please fill in all fields.");
-      return;
-    } else {
-      if (!isMatching(password, confirmPassword)) {
-        setErrorMessage("Passwords do not match!");
-        return;
-      }
+  function inputValidation(): boolean {
+    // case: email is empty
+    if (email === "") {
+      setErrorMessage("Please enter your email address.");
+      return false;
     }
+
+    // case: email is not in the correct format
+    if (!email.includes("@") || !email.includes(".")) {
+      setErrorMessage("Please enter a valid email address.");
+      return false;
+    }
+
+    // case: password is empty
+    if (password === "") {
+      setErrorMessage("Please enter your password.");
+      return false;
+    }
+
+    // case: password confirmation does not match
+    if (!isMatching(password, confirmPassword)) {
+      setErrorMessage("Passwords do not match!");
+      return false;
+    }
+
+    // case: password is less than 6 characters
+    if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long.");
+      return false;
+    }
+
+    // case: password does not contain a number
+    if (!/\d/.test(password)) {
+      setErrorMessage("Password must contain at least one number.");
+      return false;
+    }
+
+    // case: password does not contain an uppercase letter
+    if (!/[A-Z]/.test(password)) {
+      setErrorMessage("Password must contain at least one uppercase letter.");
+      return false;
+    }
+
+    // case: password does not contain a special character
+    if (!/[!@#$%^&*]/.test(password)) {
+      setErrorMessage("Password must contain at least one special character.");
+      return false;
+    }
+
+    return true;
+  }
+
+  async function handleRegisterButton(): Promise<void> {
+    // Validate the input fields
+    if (!inputValidation()) {
+      return;
+    }
+
     setIsLoading(true); // Show loading spinner
     let isSuccessful: boolean = await firebaseController.register(
       email,
@@ -57,6 +105,9 @@ export default function registerGroup() {
         navigate("/main");
       }, 1500); // Show success effect for 1.5 seconds before navigating
     } else {
+      // if it somehow manages to skip the validation above, it is some unknwon error
+      // display the error firebase gives
+
       const errorMsg = firebaseController.getErrorMessage();
       setErrorMessage(errorMsg);
       console.log(errorMsg);

@@ -24,9 +24,31 @@ export default function registerGroup() {
 
   const navigate = useNavigate();
 
+  function inputValidation(): boolean {
+    // case: email is empty
+    if (email === "") {
+      setErrorMessage("Please enter your email address.");
+      return false;
+    }
+    
+    // case: email is not in the correct format
+    if (!email.includes("@") || !email.includes(".")) {
+        setErrorMessage("Please enter a valid email address.");
+        return false;
+    }
+
+    // case: password is empty
+    if (password === "") {
+      setErrorMessage("Please enter your password.");
+      return false;
+    }
+
+    return true;
+  }
+
   async function handleLoginButton(): Promise<void> {
-    if (email === "" || password === "") {
-      setErrorMessage("Please fill in all fields.");
+    // Validate the input fields
+    if (!inputValidation()) {
       return;
     }
 
@@ -45,9 +67,12 @@ export default function registerGroup() {
         navigate("/main");
       }, 1500); // Show success effect for 1.5 seconds before navigating
     } else {
-      const errorMsg = firebaseController.getErrorMessage();
-      setErrorMessage(errorMsg);
-      console.log(errorMsg); // Maybe we can pass the error message from firebaseController for duplicate acc?
+      //const errorMsg = firebaseController.getErrorMessage();
+      //setErrorMessage(errorMsg);
+      //console.log(errorMsg); // Maybe we can pass the error message from firebaseController for duplicate acc?
+
+      // considering if it reaches this, it means all fields were entered correctly, so it must be an authentication error
+        setErrorMessage("Invalid email or password. Please try again.");
     }
   }
 

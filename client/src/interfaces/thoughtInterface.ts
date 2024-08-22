@@ -3,4 +3,5 @@ export interface Thought {
     userId: string
     thought: string,
     date: Date,
+    karma: number
 }

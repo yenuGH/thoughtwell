@@ -74,7 +74,7 @@ export function MainPage() {
                 <>
                   <Container style={{ marginTop: "100px" }}>
                     <Center>
-                      <h1 style={{ textAlign: "center" }}>
+                      <h1 style={{ textAlign: "center", color: "white" }}>
                         How would you like to interact today?
                       </h1>
                     </Center>
