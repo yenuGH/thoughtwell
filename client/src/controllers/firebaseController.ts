@@ -166,7 +166,7 @@ export const firebaseController = {
     }
   },
 
-  async voteThought(thought: Thought, voteType: string): Promise<void> {
+  async voteThought(thought: Thought, newVoteType: string): Promise<void> {
     const auth = getAuth();
     const user = auth.currentUser;
 
@@ -184,39 +184,40 @@ export const firebaseController = {
       // If the user has voted on this thought before
       if (voteDoc.exists()) {
         const existingVote = voteDoc.data().voteType;
-        if (existingVote === voteType) {
+        if (newVoteType == "" && existingVote != "") {
           // User is voting for the same vote type again, undo the vote
-          if (voteType === "upvote") {
-            await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
-            await deleteDoc(voteRef);
-          } else if (voteType === "downvote") {
-            await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
-            await deleteDoc(voteRef);
-          }
-          // Remove the vote document (apparently deleting is better than updating for our read limits)
-          await deleteDoc(voteRef);
-          return;
-        } else {
-          // User is voting for the opposite vote type, undo the previous vote
+          console.log("null case");
           if (existingVote === "upvote") {
             await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
           } else if (existingVote === "downvote") {
             await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
           }
+        } else if (newVoteType !== "" && existingVote != "") {
+          // User is voting for the opposite vote type, undo the previous vote
+          console.log("undoing case");
+          console.log("existingVote: ", existingVote);
+          console.log("newVoteType: ", newVoteType);
+          if (existingVote === "upvote") {
+            console.log("test");
+            await setDoc(thoughtRef, { karma: thought.karma - 2 }, { merge: true });
+          } else if (existingVote === "downvote") {
+            await setDoc(thoughtRef, { karma: thought.karma + 2 }, { merge: true });
+          }
+        }
+       else {
+        // User is voting for the first time
+        if (newVoteType === "upvote") {
+          await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
+        } else if (newVoteType === "downvote") {
+          await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
         }
       }
-      // User is voting for the first time
-      if (voteType === "upvote") {
-        await setDoc(thoughtRef, { karma: thought.karma + 1 }, { merge: true });
-      } else if (voteType === "downvote") {
-        await setDoc(thoughtRef, { karma: thought.karma - 1 }, { merge: true });
-      }
-
+    }
       // Save the new vote
       await setDoc(voteRef, {
         userId: user.uid,
         thoughtId: thought.id,
-        voteType: voteType,
+        voteType: newVoteType,
       });
     } catch (error) {
       console.log("Error processing vote: ", error);
