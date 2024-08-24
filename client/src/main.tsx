@@ -13,8 +13,7 @@ import { LandingPage } from './pages/authentication/landingPage.tsx'
 import { DepositPage } from './pages/deposit/depositPage.tsx'
 import { WithdrawPage } from './pages/withdraw/withdrawPage.tsx'
 import { ThoughtDetailsPage } from './pages/withdraw/thoughtDetailsPage.tsx'
-import { SubmissionsPage } from './pages/submissionsPage/submissionsPage.tsx'
-
+import { SubmissionsPage } from './pages/submissionsPage/submissionsPage.tsx';
 
 const router = createBrowserRouter([
   {
