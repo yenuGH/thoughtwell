@@ -78,7 +78,7 @@ export function DepositPage() {
                   marginTop: "50px",
                 }}
               >
-                This is where the daily thought prompt would be!
+                Let the world know what's on your mind.
               </p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

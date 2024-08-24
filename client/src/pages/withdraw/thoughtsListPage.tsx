@@ -94,9 +94,10 @@ const ThoughtsListPage = () => {
               marginTop: "0px",
             }}
           >
-            This is where the daily thought prompt would be!
+            Browse thoughts submitted by other users!
           </p>
         </Flex>
+
         <motion.section
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0, transition: { delay: 1.5 } }}
