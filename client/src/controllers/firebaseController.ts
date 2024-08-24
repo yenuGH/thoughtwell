@@ -345,6 +345,17 @@ export const firebaseController = {
     }
   },
 
+  async checkUser(): Promise<boolean> {
+    const auth = getAuth();
+    
+    const user = auth.currentUser;
+    if (user) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
   // Method to get the error message
   getErrorMessage(): string | null {
     return errorMessage;

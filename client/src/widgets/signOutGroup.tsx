@@ -1,10 +1,15 @@
-import { Button, UnstyledButton } from "@mantine/core";
-import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { firebaseController } from "../controllers/firebaseController";
+
+import { Button, UnstyledButton } from "@mantine/core";
+
+import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { AnimatePresence, motion } from "framer-motion";
+
+import { firebaseController } from "../controllers/firebaseController";
 import { sessionController } from "../controllers/sessionController";
+
+import UserSettings from "./userSettings/userSettings";
 
 export default function SignOutGroup() {
   const [currentUser, updateCurrentUser] = useState<User | null>(null);
@@ -49,26 +54,12 @@ export default function SignOutGroup() {
         >
           {currentUser ? (
             <>
-              <p style={{color: "white"}}>Welcome, {currentUser.email}</p>
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring" }}
-              >
-                <Button
-                  variant="light"
-                  color="orange"
-                  size="xs"
-                  radius="sm"
-                  onClick={handleSignOut}
-                >
-                  Sign Out
-                </Button>
-              </motion.div>
+              <UserSettings />
+              <p style={{ color: "white" }}>Welcome, {currentUser.email}</p>
             </>
           ) : (
             <>
-              <p style={{color: "white"}}>Welcome, Guest</p>
+              <p style={{ color: "white" }}>Welcome, Guest</p>
               <motion.div
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}

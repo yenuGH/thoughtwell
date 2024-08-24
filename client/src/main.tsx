@@ -1,11 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './routes/App.tsx'
-import { MainPage } from './pages/mainPage/mainPage.tsx'
-import { LandingPage } from './pages/authentication/landingPage.tsx'
-import { DepositPage } from './pages/deposit/depositPage.tsx'
-import { WithdrawPage } from './pages/withdraw/withdrawPage.tsx'
-import { ThoughtDetailsPage } from './pages/withdraw/thoughtDetailsPage.tsx'
 
 import {
   createBrowserRouter,
@@ -13,6 +8,13 @@ import {
 } from "react-router-dom";
 
 import './index.css'
+import { MainPage } from './pages/mainPage/mainPage.tsx'
+import { LandingPage } from './pages/authentication/landingPage.tsx'
+import { DepositPage } from './pages/deposit/depositPage.tsx'
+import { WithdrawPage } from './pages/withdraw/withdrawPage.tsx'
+import { ThoughtDetailsPage } from './pages/withdraw/thoughtDetailsPage.tsx'
+import { SubmissionsPage } from './pages/submissionsPage/submissionsPage.tsx'
+
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/withdraw/:thoughtId",
         element: <ThoughtDetailsPage />,
+      },
+      {
+        path: "/submissions",
+        element: <SubmissionsPage />,
       }
     ],
   },
