@@ -190,12 +190,12 @@ export function LandingPage() {
             </Container>
 
             <Center style={{ height: "50vh" }}>
-              <Image
+              {/* <Image
                 src="../src/assets/wishingwell.png"
                 height={300}
                 // margin-left="50px"
                 // width={250}
-              />
+              /> */}
             </Center>
           </Stack>
         </motion.section>
