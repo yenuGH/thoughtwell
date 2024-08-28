@@ -3,10 +3,9 @@ import {
   Center,
   Flex,
   getGradient,
-  Modal,
   Stack,
   Textarea,
-  useMantineTheme,
+  useMantineTheme
 } from "@mantine/core";
 
 import { useState } from "react";
@@ -16,9 +15,9 @@ import { firebaseController } from "../../controllers/firebaseController";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-import styles from "./depositPage.module.css";
 import AnimatedLayout from "../../routes/AnimatedLayout";
 import SignOutGroup from "../../widgets/signOutGroup";
+import styles from "./depositPage.module.css";
 
 export function DepositPage() {
   const navigate = useNavigate();

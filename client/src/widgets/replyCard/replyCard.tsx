@@ -1,14 +1,13 @@
 import {
   Box,
-  Button,
   Card,
   getGradient,
   Text,
-  useMantineTheme,
+  useMantineTheme
 } from "@mantine/core";
 
-import { Reply } from "../../interfaces/replyInterface";
 import { AnimatePresence, motion } from "framer-motion";
+import { Reply } from "../../interfaces/replyInterface";
 
 interface ReplyCardProps {
   reply: Reply;

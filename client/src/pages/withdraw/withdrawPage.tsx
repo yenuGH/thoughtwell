@@ -1,25 +1,16 @@
 import {
-  Button,
   Center,
-  Flex,
   getGradient,
-  Modal,
-  Stack,
-  Text,
-  Textarea,
-  useMantineTheme,
+  useMantineTheme
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
-import { ReplyCard } from "../../widgets/replyCard/replyCard";
-import { Thought } from "../../interfaces/thoughtInterface";
-import { Reply } from "../../interfaces/replyInterface";
-import { firebaseController } from "../../controllers/firebaseController";
-import AnimatedLayout from "../../routes/AnimatedLayout";
 import { useNavigate } from "react-router-dom";
+import { firebaseController } from "../../controllers/firebaseController";
+import { Reply } from "../../interfaces/replyInterface";
+import { Thought } from "../../interfaces/thoughtInterface";
+import AnimatedLayout from "../../routes/AnimatedLayout";
 import ThoughtsListPage from "./thoughtsListPage";
 
 export function WithdrawPage() {

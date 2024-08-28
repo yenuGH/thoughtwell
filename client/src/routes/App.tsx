@@ -1,8 +1,8 @@
-import "./App.css";
-import "@mantine/core/styles.css";
 import { createTheme, MantineProvider, Stack } from "@mantine/core";
+import "@mantine/core/styles.css";
 import { useLocation } from "react-router-dom";
 import AnimatedOutlet from "./AnimatedOutlet";
+import "./App.css";
 
 import { Footer } from "../widgets/footer/footer";
 

@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
-  Flex,
-  Stack,
   Button,
-  Text,
-  useMantineTheme,
-  Container,
+  Flex,
   Pagination,
+  Stack,
+  Text,
+  useMantineTheme
 } from "@mantine/core";
-import { Thought } from "../../interfaces/thoughtInterface";
-import { firebaseController } from "../../controllers/firebaseController";
-import SignOutGroup from "../../widgets/signOutGroup";
-import styles from "./thoughtsListPage.module.css";
-import AnimatedLayout from "../../routes/AnimatedLayout";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { firebaseController } from "../../controllers/firebaseController";
+import { Thought } from "../../interfaces/thoughtInterface";
+import AnimatedLayout from "../../routes/AnimatedLayout";
+import SignOutGroup from "../../widgets/signOutGroup";
 
 const ThoughtsListPage = () => {
   const [thoughts, setThoughts] = useState<Thought[]>();
