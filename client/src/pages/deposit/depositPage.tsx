@@ -111,7 +111,7 @@ export function DepositPage() {
                     radius="xl"
                     color="pale-blue.5"
                     size="md"
-                    style={{ width: "20%", marginRight: "10px" }}
+                    style={{ width: "25%", marginRight: "10px" }}
                     loading={loading}
                     onClick={() => {
                       // Deposit thought
