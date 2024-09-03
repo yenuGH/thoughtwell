@@ -1,27 +1,26 @@
 import {
+  Button,
   Center,
   Container,
-  Stack,
-  Group,
-  Button,
-  Image,
-  useMantineTheme,
   getGradient,
+  Image,
+  Stack,
+  useMantineTheme
 } from "@mantine/core";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import AnimatedLayout from "../../routes/AnimatedLayout.tsx";
 import { AnimatePresence, motion } from "framer-motion";
+import AnimatedLayout from "../../routes/AnimatedLayout.tsx";
 
-import "@fontsource/bungee";
 import "@fontsource-variable/anybody";
-import TitleGroup from "../../widgets/titleGroup/titleGroup.tsx";
-import RegisterGroup from "../../widgets/registerGroup/registerGroup.tsx";
+import "@fontsource/bungee";
 import LoginGroup from "../../widgets/loginGroup/loginGroup.tsx";
+import RegisterGroup from "../../widgets/registerGroup/registerGroup.tsx";
+import TitleGroup from "../../widgets/titleGroup/titleGroup.tsx";
 import styles from "./landingPage.module.css";
 
-import { Stars, Cloud } from "@react-three/drei";
+import { Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useNavigate } from "react-router-dom";
 import { sessionController } from "../../controllers/sessionController.ts";
@@ -191,12 +190,12 @@ export function LandingPage() {
             </Container>
 
             <Center style={{ height: "50vh" }}>
-              <Image
+              {/* <Image
                 src="../src/assets/wishingwell.png"
                 height={300}
                 // margin-left="50px"
                 // width={250}
-              />
+              /> */}
             </Center>
           </Stack>
         </motion.section>

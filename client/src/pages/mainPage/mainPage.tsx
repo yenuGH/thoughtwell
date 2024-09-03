@@ -1,27 +1,20 @@
 import {
+  Button,
   Center,
   Container,
-  Stack,
-  Group,
-  Button,
-  Textarea,
-  Text,
-  Image,
-  useMantineTheme,
-  getGradient,
-  UnstyledButton,
   Flex,
-  Box,
+  getGradient,
+  Group,
+  Stack,
+  useMantineTheme
 } from "@mantine/core";
 
 import AnimatedLayout from "../../routes/AnimatedLayout.tsx";
 // import DepositPage from "../../widgets/deposit/depositUI.tsx";
 // import WithdrawButton from "../withdraw/withdrawPage.tsx";
-import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import SignOutGroup from "../../widgets/signOutGroup.tsx";
-import { AnimatePresence, motion } from "framer-motion";
 
 export function MainPage() {
   // useEffect(() => {

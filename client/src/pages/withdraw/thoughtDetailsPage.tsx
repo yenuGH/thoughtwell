@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import {
+  ActionIcon,
+  Box,
+  Button,
+  Center,
   Flex,
+  getGradient,
+  Pagination,
   Stack,
   Text,
   Textarea,
-  Button,
-  getGradient,
   useMantineTheme,
-  Center,
-  Box,
-  Pagination,
-  ActionIcon,
 } from "@mantine/core";
+import { IconArrowBigDown, IconArrowBigUp } from "@tabler/icons-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { firebaseController } from "../../controllers/firebaseController";
-import { Thought } from "../../interfaces/thoughtInterface";
 import { Reply } from "../../interfaces/replyInterface";
+import { Thought } from "../../interfaces/thoughtInterface";
 import AnimatedLayout from "../../routes/AnimatedLayout";
 import { ReplyCard } from "../../widgets/replyCard/replyCard";
 import SignOutGroup from "../../widgets/signOutGroup";
 import styles from "./thoughtDetailsPage.module.css";
-import { AnimatePresence, motion } from "framer-motion";
-import { IconArrowBigDown, IconArrowBigUp } from "@tabler/icons-react";
-import { getAuth } from "firebase/auth";
 
 export function ThoughtDetailsPage() {
   const { thoughtId } = useParams<{ thoughtId: string }>();

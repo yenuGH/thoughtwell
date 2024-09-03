@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { ActionIcon, Menu, rem } from "@mantine/core";
 
 import {
-    IconUserCircle,
-    IconSettings,
-    IconTrash,
-    IconLogout,
-    IconSend,
+  IconLogout,
+  IconSend,
+  IconSettings,
+  IconUserCircle
 } from "@tabler/icons-react";
 
 import { firebaseController } from "../../controllers/firebaseController";

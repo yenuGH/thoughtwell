@@ -1,22 +1,19 @@
 import {
-    Button,
-    Center,
-    Flex,
-    getGradient,
-    Modal,
-    Stack,
-    Textarea,
-    useMantineTheme,
+  Button,
+  Center,
+  Flex,
+  getGradient,
+  Stack,
+  useMantineTheme
 } from "@mantine/core";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { firebaseController } from "../../controllers/firebaseController";
 import { Thought } from "../../interfaces/thoughtInterface";
 
-import styles from "./submissionsPage.module.css";
 import AnimatedLayout from "../../routes/AnimatedLayout";
 import SignOutGroup from "../../widgets/signOutGroup";
 

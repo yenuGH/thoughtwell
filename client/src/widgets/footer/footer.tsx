@@ -1,6 +1,6 @@
-import { Group, Stack, ActionIcon, Title, Divider } from "@mantine/core";
+import { Group, Stack, ActionIcon} from "@mantine/core";
 
-import { IconBuildingBank, IconBrandGithub } from "@tabler/icons-react";
+import { IconBrandGithub } from "@tabler/icons-react";
 
 export function Footer(): JSX.Element {
   return (

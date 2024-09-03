@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Divider, Flex } from "@mantine/core";
 
-import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { firebaseController } from "../controllers/firebaseController";
