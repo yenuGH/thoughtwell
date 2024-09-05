@@ -17,7 +17,7 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [React](https://react.dev/) - Web framework
+* [React](https://react.dev/) - Web library for user interfaces
 * [Mantine](https://mantine.dev/) - React components library
 * [Vite](https://vitejs.dev/) - Local dev server build tool using React and Typescript
 * [Firebase](https://firebase.google.com/) - Authentication and Database
